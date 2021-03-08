@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>为 Github Pages 绑定个人域名 - Xuekai&#039;s Blog</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="Xuekai&#039;s Blog"><meta name="msapplication-TileImage" content="/img/favicon.svg"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Xuekai&#039;s Blog"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="一直用着免费的 Github Pages 搭载个人博客，突然想要一个自己的域名。个人域名的主要优点有：  方便记忆，也就更方便传播 使用别人的二级域名，总是寄人篱下，还是有个自己的一亩三分地比较好  然后就去为博客绑定了个人域名，下面讲述下主要流程。"><meta property="og:type" content="blog"><meta property="og:title" content="为 Github Pages 绑定个人域名"><meta property="og:url" content="https://xkniu.github.io/2019/01/17/github-pages-custom-domain/"><meta property="og:site_name" content="Xuekai&#039;s Blog"><meta property="og:description" content="一直用着免费的 Github Pages 搭载个人博客，突然想要一个自己的域名。个人域名的主要优点有：  方便记忆，也就更方便传播 使用别人的二级域名，总是寄人篱下，还是有个自己的一亩三分地比较好  然后就去为博客绑定了个人域名，下面讲述下主要流程。"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://xkniu.github.io/img/og_image.png"><meta property="article:published_time" content="2019-01-16T16:00:00.000Z"><meta property="article:modified_time" content="2021-03-08T02:30:35.612Z"><meta property="article:author" content="Xuekai Niu"><meta property="article:tag" content="个人网站"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="/img/og_image.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://xkniu.github.io/2019/01/17/github-pages-custom-domain/"},"headline":"为 Github Pages 绑定个人域名","image":["https://xkniu.github.io/img/og_image.png"],"datePublished":"2019-01-16T16:00:00.000Z","dateModified":"2021-03-08T02:30:35.612Z","author":{"@type":"Person","name":"Xuekai Niu"},"description":"一直用着免费的 Github Pages 搭载个人博客，突然想要一个自己的域名。个人域名的主要优点有：  方便记忆，也就更方便传播 使用别人的二级域名，总是寄人篱下，还是有个自己的一亩三分地比较好  然后就去为博客绑定了个人域名，下面讲述下主要流程。"}</script><link rel="canonical" href="https://xkniu.github.io/2019/01/17/github-pages-custom-domain/"><link rel="icon" href="/img/favicon.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.12.0/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><meta name="generator" content="Hexo 5.3.0"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">Xuekai&#039;s Blog</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/archives">时间轴</a><a class="navbar-item" href="/categories">分类</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="The Moon and Sixpence" href="https://github.com/xkniu"><i class="fas fa-moon"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2019-01-16T16:00:00.000Z" title="1/17/2019, 12:00:00 AM">2019-01-17</time>发表</span><span class="level-item"><time dateTime="2021-03-08T02:30:35.612Z" title="3/8/2021, 10:30:35 AM">2021-03-08</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a><span> / </span><a class="link-muted" href="/categories/%E6%8A%80%E6%9C%AF/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99/">个人网站</a></span><span class="level-item">5 分钟读完 (大约792个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">为 Github Pages 绑定个人域名</h1><div class="content"><p>一直用着免费的 Github Pages 搭载个人博客，突然想要一个自己的域名。个人域名的主要优点有：</p>
+<ul>
+<li>方便记忆，也就更方便传播</li>
+<li>使用别人的二级域名，总是寄人篱下，还是有个自己的一亩三分地比较好</li>
+</ul>
+<p>然后就去为博客绑定了个人域名，下面讲述下主要流程。</p>
+<a id="more"></a>
+
+<p>主要流程如下：</p>
+<ol>
+<li>选择一个域名提供商并购买域名</li>
+<li>配置 DNS 信息</li>
+<li>配置 Github Pages CNAME 信息</li>
+</ol>
+<h2 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a>购买域名</h2><p>可以选择国内或国外的域名提供商来购买域名，国内通常需要个人实名备案，下面是一些常用的域名商：</p>
+<ul>
+<li>国内的域名商：阿里云、腾讯云</li>
+<li>国外的域名商：Godaddy、Dynadot</li>
+</ul>
+<p>我选择使用 <a target="_blank" rel="noopener" href="https://www.dynadot.com/">Dynadot</a> 作为我的域名提供商，在主页搜索你想要的域名，如果还没有被他人注册，选择购买即可。</p>
+<h2 id="配置-DNS"><a href="#配置-DNS" class="headerlink" title="配置 DNS"></a>配置 DNS</h2><p>为你的域名配置 DNS 信息。配置域名 DNS 时，有很多种配置方式，我期望的效果是：</p>
+<ul>
+<li>使用主域名作为主要的网站地址</li>
+<li>www 的子域名重定向到主域名，即访问 www 子域名时，跳转到主域名（浏览器地址中展示主域名）</li>
+<li>强行跳转到 HTTPS 域名</li>
+</ul>
+<p>以 Dynadot 为例，选择「My Account - My Domains - Manage Domains - Select your domain - DNS Settings - Custom DNS」，然后：</p>
+<ol>
+<li>在 Domain Record 下添加一个 CNAME 指向你的 Github Pages 地址 <code>username.github.io</code></li>
+<li>在 Subdomain Records 下添加 Forward 301 记录，将 www 子域名重定向到 <code>https://yourdomain.com</code></li>
+</ol>
+<p>通常主域名是不建议使用 CNAME 跳转的，因为 DNS 规范中返回 CNAME 时，不允许和其他 Resource Record 一起返回，它可能会造成一些问题，详情可以参考<a target="_blank" rel="noopener" href="https://medium.freecodecamp.org/why-cant-a-domain-s-root-be-a-cname-8cbab38e5f5c">这篇</a>文章。但如果你又不想配置 A 记录（改变 IP 时不太方便），你可以使用 <code>ALIAS</code>、<code>ANAME</code>，不过 Dynadot 只支持 CNAME 或者 A 记录，所以我还是选择了配置 CNAME。</p>
+<h2 id="配置-Github-Pages"><a href="#配置-Github-Pages" class="headerlink" title="配置 Github Pages"></a>配置 Github Pages</h2><p>完成 DNS 的配置后，还需要在你的 Github Pages Repo 中增加一个 CNAME 文件，文件的内容为你使用的域名地址（不要 http 前缀），只能添加一条。例如可以配置为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yourdomain.com</span><br></pre></td></tr></table></figure>
+<p>Github 会根据你配置的 CNAME，自动为你做 www 子域名的重定向，你也可以使用 DNS 配置的重定向。</p>
+<p>感谢 <a target="_blank" rel="noopener" href="https://letsencrypt.org/">Let’s Encrypt</a> 让我们能够用上开源免费的 HTTPS 证书，Github Pages 也默认对它<a target="_blank" rel="noopener" href="https://blog.github.com/2018-05-01-github-pages-custom-domains-https/">支持</a>。简单的在 Repo 的「Settings - GitHub Pages - Enforce HTTPS」打钩开启，即可完成 HTTPS 的配置。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li>Github 自定义域名官方文档： <a target="_blank" rel="noopener" href="https://help.github.com/articles/using-a-custom-domain-with-github-pages/">https://help.github.com/articles/using-a-custom-domain-with-github-pages/</a></li>
+<li>Dynadot - How do I create a CNAME? <a target="_blank" rel="noopener" href="https://www.dynadot.com/community/help/question/create-CNAME">https://www.dynadot.com/community/help/question/create-CNAME</a></li>
+</ul>
+</div><div class="article-licensing box"><div class="licensing-title"><p>为 Github Pages 绑定个人域名</p><p><a href="https://xkniu.github.io/2019/01/17/github-pages-custom-domain/">https://xkniu.github.io/2019/01/17/github-pages-custom-domain/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>Xuekai Niu</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2019-01-17</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2021-03-08</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icon" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a><a class="icon" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a><a class="icon" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99/">个人网站</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/2018/11/17/the-pomodoro-technique/"><span class="level-item">了解番茄工作法</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.6.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "ff3eddc7f95d0b69aeea4b267a9490f7",
+            repo: "blog-comment",
+            owner: "xkniu",
+            clientID: "a3d419228cb475e10973",
+            clientSecret: "b7de630de73e7c96e4fdc1a4cacd5d58a5def726",
+            admin: ["xkniu"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            proxy: "https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token",
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><div class="column column-left is-4-tablet is-4-desktop is-4-widescreen  order-1 is-sticky"><div class="card widget" data-type="profile"><div class="card-content"><nav class="level"><div class="level-item has-text-centered flex-shrink-1"><div><figure class="image is-128x128 mx-auto mb-2"><img class="avatar is-rounded" src="/img/avatar.jpeg" alt="Xuekai Niu"></figure><p class="title is-size-4 is-block" style="line-height:inherit;">Xuekai Niu</p><p class="is-size-6 is-block">你不可能经由一个没有喜悦的旅程，而达到一个喜悦的终点。</p><p class="is-size-6 is-flex justify-content-center"><i class="fas fa-map-marker-alt mr-1"></i><span>Shenzhen, China</span></p></div></div></nav><nav class="level is-mobile"><div class="level-item has-text-centered is-marginless"><div><p class="heading">文章</p><a href="/archives"><p class="title">3</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">分类</p><a href="/categories"><p class="title">5</p></a></div></div><div class="level-item has-text-centered is-marginless"><div><p class="heading">标签</p><a href="/tags"><p class="title">4</p></a></div></div></nav><div class="level"><a class="level-item button is-primary is-rounded" href="https://github.com/xkniu" target="_blank" rel="noopener">关注我</a></div><div class="level is-mobile is-multiline"><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Github" href="https://github.com/xkniu"><i class="fab fa-github"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Weibo" href="https://weibo.com/ricercar"><i class="fab fa-weibo"></i></a><a class="level-item button is-transparent is-marginless" target="_blank" rel="noopener" title="Email" href="mailto:xuekai.niu@gmail.com"><i class="fa fa-envelope"></i></a></div></div></div><!--!--><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/%E6%8A%80%E6%9C%AF/"><span class="level-start"><span class="level-item">技术</span></span><span class="level-end"><span class="level-item tag">2</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E6%8A%80%E6%9C%AF/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99/"><span class="level-start"><span class="level-item">个人网站</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li><li><a class="level is-mobile" href="/categories/%E6%8A%80%E6%9C%AF/%E5%B7%A5%E5%85%B7%E7%B3%BB%E5%88%97/"><span class="level-start"><span class="level-item">工具系列</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li><li><a class="level is-mobile" href="/categories/%E8%AE%A4%E7%9F%A5%E7%A7%91%E5%AD%A6/"><span class="level-start"><span class="level-item">认知科学</span></span><span class="level-end"><span class="level-item tag">1</span></span></a><ul><li><a class="level is-mobile" href="/categories/%E8%AE%A4%E7%9F%A5%E7%A7%91%E5%AD%A6/%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86/"><span class="level-start"><span class="level-item">时间管理</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/%E4%B8%AA%E4%BA%BA%E7%BD%91%E7%AB%99/"><span class="tag">个人网站</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%B7%A5%E5%85%B7/"><span class="tag">工具</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E6%97%B6%E9%97%B4%E7%AE%A1%E7%90%86/"><span class="tag">时间管理</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E8%AE%A4%E7%9F%A5%E7%A7%91%E5%AD%A6/"><span class="tag">认知科学</span><span class="tag">1</span></a></div></div></div></div></div></div><!--!--></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">Xuekai&#039;s Blog</a><p class="is-size-7"><span>&copy; 2021 Xuekai Niu</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
