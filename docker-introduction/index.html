@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><meta><title>Docker 技术概述 - KK</title><link rel="manifest" href="/manifest.json"><meta name="application-name" content="KK"><meta name="msapplication-TileImage" content="/img/favicon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="KK"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="概要本文从一个概览的角度，介绍下 Docker 技术的核心优势、技术原理和相关的组件。 主要从以下几个方面来了解：  为什么用 Docker？ 了解 Docker 能干什么 了解 Docker 和其他方便比有什么优势   Docker 的技术原理 Docker 本身的架构设计 Docker 底层所依赖的关键技术   Docker 集群的简单介绍"><meta property="og:type" content="blog"><meta property="og:title" content="Docker 技术概述"><meta property="og:url" content="https://xkniu.github.io/docker-introduction/"><meta property="og:site_name" content="KK"><meta property="og:description" content="概要本文从一个概览的角度，介绍下 Docker 技术的核心优势、技术原理和相关的组件。 主要从以下几个方面来了解：  为什么用 Docker？ 了解 Docker 能干什么 了解 Docker 和其他方便比有什么优势   Docker 的技术原理 Docker 本身的架构设计 Docker 底层所依赖的关键技术   Docker 集群的简单介绍"><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://docs.docker.com/engine/images/architecture.svg"><meta property="og:image" content="https://docker-doc.readthedocs.io/zh_CN/latest/_images/docker-filesystems-multilayer.png"><meta property="article:published_time" content="2021-04-01T16:00:00.000Z"><meta property="article:modified_time" content="2022-06-11T08:55:58.530Z"><meta property="article:author" content="KK"><meta property="article:tag" content="Docker"><meta property="twitter:card" content="summary"><meta property="twitter:image" content="https://docs.docker.com/engine/images/architecture.svg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://xkniu.github.io/docker-introduction/"},"headline":"Docker 技术概述","image":["https://docker-doc.readthedocs.io/zh_CN/latest/_images/docker-filesystems-multilayer.png"],"datePublished":"2021-04-01T16:00:00.000Z","dateModified":"2022-06-11T08:55:58.530Z","author":{"@type":"Person","name":"KK"},"publisher":{"@type":"Organization","name":"KK","logo":{"@type":"ImageObject","url":{"text":"KK 的博客"}}},"description":"概要本文从一个概览的角度，介绍下 Docker 技术的核心优势、技术原理和相关的组件。 主要从以下几个方面来了解：  为什么用 Docker？ 了解 Docker 能干什么 了解 Docker 和其他方便比有什么优势   Docker 的技术原理 Docker 本身的架构设计 Docker 底层所依赖的关键技术   Docker 集群的简单介绍"}</script><link rel="canonical" href="https://xkniu.github.io/docker-introduction/"><link rel="icon" href="/img/favicon.png"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@9.12.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><script>var _hmt = _hmt || [];
+        (function() {
+            var hm = document.createElement("script");
+            hm.src = "//hm.baidu.com/hm.js?ee9726f369fef805d68de053d7b60388";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();</script><!--!--><script src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js" defer></script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=G-6P7LDSDHP6" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'G-6P7LDSDHP6');</script><!--!--><script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script><!--!--><!--!--><meta name="generator" content="Hexo 5.4.2"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/">KK 的博客</a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">首页</a><a class="navbar-item" href="/archives">归档</a><a class="navbar-item" href="/tags">标签</a><a class="navbar-item" href="/about">关于</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="The Moon and Sixpence" href="https://github.com/xkniu"><i class="fas fa-moon"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-9-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2021-04-01T16:00:00.000Z" title="4/2/2021, 12:00:00 AM">2021-04-02</time>发表</span><span class="level-item"><time dateTime="2022-06-11T08:55:58.530Z" title="6/11/2022, 4:55:58 PM">2022-06-11</time>更新</span><span class="level-item"><a class="link-muted" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></span><span class="level-item">26 分钟读完 (大约3833个字)</span><span class="level-item" id="busuanzi_container_page_pv"><span id="busuanzi_value_page_pv">0</span>次访问</span></div></div><h1 class="title is-3 is-size-4-mobile">Docker 技术概述</h1><div class="content"><h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>本文从一个概览的角度，介绍下 Docker 技术的核心优势、技术原理和相关的组件。</p>
+<p>主要从以下几个方面来了解：</p>
+<ol>
+<li>为什么用 Docker？<ol>
+<li>了解 Docker 能干什么</li>
+<li>了解 Docker 和其他方便比有什么优势</li>
+</ol>
+</li>
+<li>Docker 的技术原理<ol>
+<li>Docker 本身的架构设计</li>
+<li>Docker 底层所依赖的关键技术</li>
+</ol>
+</li>
+<li>Docker 集群的简单介绍</li>
+</ol>
+<span id="more"></span>
+
+<h2 id="为什么使用-Docker"><a href="#为什么使用-Docker" class="headerlink" title="为什么使用 Docker"></a>为什么使用 Docker</h2><p>让我们带着几个核心问题出发。问题从动机开始，而不是从“是什么”来开始：</p>
+<ol>
+<li>Docker 主要解决了什么问题？</li>
+<li>在有 Docker 之前有其他的解决方案吗？</li>
+<li>Docker 有什么优势？</li>
+</ol>
+<h3 id="解决了什么问题"><a href="#解决了什么问题" class="headerlink" title="解决了什么问题"></a>解决了什么问题</h3><p><strong>本质：快速的分发部署应用</strong></p>
+<p>在云时代，应用需要方便地在网上传播，就是说需要脱离硬件资源的限制，同时能够容易地获取。</p>
+<p>设想我们有一个简单的 Web 服务器应用，它基于 Ngnix、Java、MySQL 来开发实现。现在用户需要把它部署到自己的机器上，那么用户需要安装所需要的各种软件和依赖，并对它们进行配置，然后进行一系列的测试验证确认它们是否能够协同工作。这些步骤中很可能因为本地环境的不同遇到各种奇怪的问题，应用的传播十分复杂。</p>
+<p>Docker 使用了一种很聪明的方式，<strong>通过镜像来把整个应用打包，将应用和运行平台解耦，再集中地管理和分发镜像</strong>。</p>
+<p>Docker 的官网有一份简述 <a target="_blank" rel="noopener" href="https://www.docker.com/why-docker">Why Docker</a>，总的来说就是：</p>
+<ul>
+<li>目前的软件开发需要使用各种各样的语言、架构、框架和工具，带来了很大的复杂性，Docker 的目标就是简化和加速这个工作流。主要有以下几个方面：<ul>
+<li>让构建、分享、运行变得简单</li>
+<li>提高开发运维的整个流程的效率，保证运行的一致性</li>
+<li>团队合作更加高效</li>
+</ul>
+</li>
+</ul>
+<h3 id="Docker-与虚拟机对比"><a href="#Docker-与虚拟机对比" class="headerlink" title="Docker 与虚拟机对比"></a>Docker 与虚拟机对比</h3><p>Docker 之前怎么解决前面的问题？</p>
+<p>Docker 是一种容器引擎，容器是一种轻量级的虚拟化技术，在这之前主要的虚拟化技术是虚拟机。</p>
+<p>容器和虚拟机有什么区别？</p>
+<ul>
+<li>容器：容器和宿主系统共用同一个内核空间，利用了内核提供的资源隔离和资源限制的能力，直接使用宿主机的资源。</li>
+<li>虚拟机：通过 Hypervisor 层来模拟硬件，在它上面安装完整的操作系统，应用再运行在虚拟的 Guest OS 中。</li>
+</ul>
+<p>它们的特性对比如下：</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>容器</th>
+<th>虚拟机</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>启动时间</td>
+<td>秒级</td>
+<td>分钟级</td>
+</tr>
+<tr>
+<td>镜像存储</td>
+<td>KB~MB</td>
+<td>GB~TB</td>
+</tr>
+<tr>
+<td>系统资源</td>
+<td>0~5%</td>
+<td>5~15%</td>
+</tr>
+<tr>
+<td>系统支持量</td>
+<td>单机支持上千个容器</td>
+<td>一般几十个</td>
+</tr>
+</tbody></table>
+<p>总的来讲，Docker 的主要优点有：</p>
+<ul>
+<li>轻量：秒级的启动和停止。</li>
+<li>更高效的虚拟化：占用更少的系统资源。</li>
+<li>扩展性：运行在各种平台上，本地、物理机、云端，能够很轻松的迁移。</li>
+<li>更简单的管理和分发：镜像的大小比较小，并且通过增量的方式更新和分发，更加高效。</li>
+</ul>
+<h2 id="Docker-技术原理"><a href="#Docker-技术原理" class="headerlink" title="Docker 技术原理"></a>Docker 技术原理</h2><h3 id="Docker-架构"><a href="#Docker-架构" class="headerlink" title="Docker 架构"></a>Docker 架构</h3><p>Docker 使用了 C/S 架构。Client 通过命令和 deamon 交互，deamon 负责具体的镜像拉取、容器构建运行等。Client 和 deamon 可以在同一个系统中，也可以将 deamon 部署在远端。</p>
+<p><img src="https://docs.docker.com/engine/images/architecture.svg" alt="Docker Architype"></p>
+<p>架构主要分为三个部分：</p>
+<ul>
+<li>Docker deamon: Docker 服务端进程，又叫 <code>dockerd</code>。它监听端口的命令，提供 REST API 来管理镜像、容器、网络、volume 等，同时还可以和其他的 docker demon 交互来管理 docker 服务。</li>
+<li>Docker client: Docker 客户端，提供命令来让用户和 deamon 交互。客服端发送用户输入的命令到服务端，deamon 执行这些命令。</li>
+<li>Docker registry: 集中存储、分发 Docker 镜像的服务，Docker deamon 从指定 registry 上拉取镜像。 </li>
+</ul>
+<h3 id="基本概念"><a href="#基本概念" class="headerlink" title="基本概念"></a>基本概念</h3><p>Docker 有三个基本概念：</p>
+<ul>
+<li>Image（镜像）：<ul>
+<li>镜像就是一个只读的模板，用来创建容器。它是一个特殊的文件系统，包含了程序运行所需要的库、资源、配置文件、环境变量等。它是静态不可变的，不包含动态产生的任何数据。</li>
+</ul>
+</li>
+<li>Container（容器）：<ul>
+<li>容器就是镜像的一个运行时实例，它以镜像为基础，在上面创建一层容器的储存层，是运行在独立命名空间中的一个进程。它可以被创建、启动、关闭、重启等。</li>
+</ul>
+</li>
+<li>Repository（仓库）：<ul>
+<li>Docker Registry 是提供镜像的集中式的存储、分发的服务，它可以包含多个 Repository (仓库)，每个仓库有可以有多个 tag (标签)，其中每个标签就对应了一个镜像。</li>
+</ul>
+</li>
+</ul>
+<p>总结来说就是，镜像是静态的不可变的，而容器是镜像的运行实例，它们有点像面向对象编程中的类和对象的关系，而仓库就是存储和分发镜像的地方。</p>
+<h3 id="底层原理"><a href="#底层原理" class="headerlink" title="底层原理"></a>底层原理</h3><p>使用容器的一个核心目的就是，每次容器的运行能够独立并且稳定。即在宿主机上启动多次，或者在不同的宿主机上迁移，运行的效果是一样的。</p>
+<p>那怎么样才能让每次的运行的效果是一样的？可以从两个方面来考虑：</p>
+<ul>
+<li>部署一致性：<ul>
+<li>应用的打包要包含应用的完整依赖，包括文件、配置、依赖库等，即镜像中需要有应用完整的依赖。</li>
+</ul>
+</li>
+<li>执行一致性：<ul>
+<li>希望容器每次运行时看到相同的计算机的“视图”。不会因为宿主机上运行着不同的进程，有着不同的文件而受到影响。</li>
+<li>宿主机上可能同时运行着多个容器，为了保证容器的运行稳定，同时保证宿主机的运行稳定。那么就要限制单个容器使用的资源，如 CPU、内存、网络、硬盘 IO 等，防止一个容器占用资源过多影响到宿主机，从而影响到其他容器。</li>
+</ul>
+</li>
+</ul>
+<p>Docker 主要通过以下底层技术实现了前面的两种一致性：</p>
+<ul>
+<li>部署一致性：rootfs &amp; Union FS</li>
+<li>执行一致性：namespace &amp; cgroups</li>
+</ul>
+<h4 id="rootfs-amp-Union-FS"><a href="#rootfs-amp-Union-FS" class="headerlink" title="rootfs &amp; Union FS"></a>rootfs &amp; Union FS</h4><p>容器的静态依赖是通过镜像来支持的，镜像中包含了容器所需要的完整依赖。那么一个容器通常会有什么依赖呢？</p>
+<ul>
+<li>最直观想到的部分，应用程序二进制文件本身和它依赖的语言库、配置等。</li>
+<li>容易被忽略的部分，应用运行的操作系统，是容器完整的“依赖库”。</li>
+</ul>
+<p>典型的 Linux 文件系统由两部分组成：</p>
+<ul>
+<li>bootfs: 操作系统的内核</li>
+<li>rootfs: 操作系统包含的所有配置、文件和目录</li>
+</ul>
+<p>容器镜像通过<strong>打包一个 rootfs</strong>，提供了“打包操作系统的能力”，让操作系统这个最基础的“依赖库”保持稳定，从而保证了<strong>容器的部署一致性</strong>。</p>
+<p>那么容器只需要在 rootfs 基础上，再将应用程序、依赖的语言库、配置等增加上去，就能够保证依赖的稳定性。但是直接在 rootfs 上不停的修改有什么缺点呢？</p>
+<ul>
+<li>缺少复用性：每次安装一些不同的程序软件，都会打包出一个新的 rootfs，这些 rootfs 之间没有关联，无法复用。（可以把它们想象成两个完全无关的 Git 仓库，即使代码相同也无法 merge）</li>
+</ul>
+<p>容器镜像使用了联合文件系统（Union FS）来解决这个问题，它通过分层，<strong>将每次修改差量的部分作为新的层存储下来</strong>。</p>
+<p>Docker 镜像是通过分层构建的，其中每一层都是只读的。当容器运行时，会在最上层提供了一个可读写入层用来写入数据。如下图所示：</p>
+<p><img src="https://docker-doc.readthedocs.io/zh_CN/latest/_images/docker-filesystems-multilayer.png" alt="Docker Union FS"></p>
+<h4 id="namespace-amp-cgroups"><a href="#namespace-amp-cgroups" class="headerlink" title="namespace &amp; cgroups"></a>namespace &amp; cgroups</h4><p>为了容器执行的一致性，需要 Linux 的以下两种技术：</p>
+<ul>
+<li>namespace: 为容器提供<strong>资源隔离</strong>能力，给应用创建了一个“边界”，让应用只能看到 namespace 内的“世界”。</li>
+<li>cgroups: <strong>资源限制</strong>的能力，限制容器的边界，让容器占用的资源是可控的。</li>
+</ul>
+<p>Namespace 是 Linux 创建进程时的一个可选参数，因此<strong>容器其实也只是一个特殊的进程</strong>。其中 Linux 主要支持了 6 种 namespace 来进行各种资源隔离，基本上覆盖了进程运行所需要的主要的资源：</p>
+<table>
+<thead>
+<tr>
+<th>Namespace</th>
+<th>系统资源</th>
+<th>容器中的隔离效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>UTS</td>
+<td>主机信息</td>
+<td>每个容器可以有自己的主机和域名，在网络上可以被视为独立的节点，而非宿主机的一个进程</td>
+</tr>
+<tr>
+<td>IPC</td>
+<td>进程间通信</td>
+<td>同一个 IPC namespace 下的进程才彼此可见</td>
+</tr>
+<tr>
+<td>PID</td>
+<td>进程</td>
+<td>每个 PID 命名空间中进程可以有独立的 PID，如每个容器可以有它的 PID 为 1 的 root 进程</td>
+</tr>
+<tr>
+<td>Mount</td>
+<td>文件系统挂载点</td>
+<td>每个容器能看到不同的文件系统层次结构</td>
+</tr>
+<tr>
+<td>Network</td>
+<td>网络</td>
+<td>每个容器有独立的网络设备，IP 地址、IP 路由表、端口号等，如同一台宿主机上多个容器的应用都能使用 80 端口</td>
+</tr>
+<tr>
+<td>User</td>
+<td>用户</td>
+<td>容器能够拥有和宿主机独立的 user 和 group</td>
+</tr>
+</tbody></table>
+<p>但是 namespace 隔离机制也有不足之处，隔离的不够彻底。比如时间就不支持 namespace 隔离，容器修改了宿主机的时间，会影响到宿主机上的其他容器。</p>
+<p>cgroups 是 Linux 对进程提供资源限制的手段。其中有几个核心概念：</p>
+<ul>
+<li>subsystem（子系统）：代表 Linux 能提供限制的一种资源，如 CPU、内存、硬盘 IO 等。</li>
+<li>cgroup（控制组）：一组任务和子系统的关联关系，表示对任务进行怎样的资源限制。是一个中间的结构，与多个进程关联，可以理解成一个进程组，主要是为了方便管理，让一组进程能够受到某几个子系统的限制。</li>
+<li>hierarchy（层级树）：一组 cgroup 形成的树结构，子节点会默认的继承父节点的属性。这种继承主要是为了方便使用，如在限制的基础上继续限制。</li>
+<li>task（任务）：对应系统中的一个进程，与 cgroup 进行多对多关联。</li>
+</ul>
+<p>cgroups 实现的本质是<strong>给进程挂上钩子（hook），当进程（task）运行时涉及到某个资源时， 就会触发钩子上附带的 subsystem 进行检测和限制</strong>。</p>
+<p>Linux 主要提供了以下 subsystem：</p>
+<ul>
+<li>cpu, cpuacct: cpu 主要限制进程 cpu 使用率，cpuacct 统计 cgroups 中进程的 cpu 使用报告。</li>
+<li>cpuset: 指定任务能运行在哪个核上。</li>
+<li>blkio: 限制块设备（磁盘、SSD、USB 等）的 IO 速率</li>
+<li>devices: 限制 cgroup 中任务对设备的访问。</li>
+<li>net_cls: 为 cgroup 中任务的报文加上特殊的标记，这样工具就能针对网络进行配置。</li>
+<li>net_prio: 对网络接口设置优先级。</li>
+<li>memory: 限制 cgroup 的内存使用，并生成任务的使用情况报告。</li>
+</ul>
+<p>子系统的隔离也有一些不足之处，比如内核 3.x 中，硬盘通过 Buffer IO 写入时，内核缓冲区没有进行隔离，高 IO 的进程很容易影响到其他进程。内核 4.x 中 cgroups v2 对此作了改进。</p>
+<p>扩展问题：</p>
+<ul>
+<li>容器本质是一个进程，那怎么样支持多进程服务？<ul>
+<li>可以通过启动子进程，使用同样的 namespace。那么父进程就需要是一个启动其他进程的程序或脚本，如 supervisord、runit。</li>
+</ul>
+</li>
+<li>为什么最佳实践是容器中只启动一个进程？<ul>
+<li>尽量的使用单进程容器，因为 Docker 就相当于一个守护进程，它能很好的管理进程，如 “docker ps” 了解进程状态等。如果使用 supervisord，相当于你自己维护了子进程的状态，容器并不知道，这无疑增加了容器的维护成本和不稳定性。</li>
+<li>另外从设计哲学上，容器提供单一的功能有很多优点，参考<a target="_blank" rel="noopener" href="https://devops.stackexchange.com/questions/447/why-it-is-recommended-to-run-only-one-process-in-a-container">这里</a>。</li>
+</ul>
+</li>
+</ul>
+<h2 id="Docker-从单机到集群"><a href="#Docker-从单机到集群" class="headerlink" title="Docker 从单机到集群"></a>Docker 从单机到集群</h2><p>我们将单体应用拆分为细小的服务，运行在各个容器中。那么如何部署、管理、扩展这么多的容器？</p>
+<p>容器编排就是用来管理容器集群的方式，从“容器”变成了“容器云”。</p>
+<p>容器编排的工具，最具代表性的有：</p>
+<ul>
+<li>Docker 公司的 Compose + Swarm</li>
+<li>Google 主导的 Kubernetes，现在已成为容器编排的事实标准了。</li>
+</ul>
+<p>简单的介绍下它们的区别：</p>
+<ul>
+<li>Docker Compose: 允许你配置和启动多个 Docker 容器，用于在同一主机上管理多个容器。</li>
+<li>Docker Swarm: 用于在多个主机上运行和连接 Docker 容器，并且提供一些扩展管理，如容器崩溃时启动新容器等，即一个容器集群管理和编排的工具。</li>
+<li>Kubernetes: 也是一个容器管理和编排的工具， Kubernetes 从更宏观的高度，用统一的方式定义任务间的关系，用 Pod 和 Service 等统一抽象，提供了更强大的编排能力。</li>
+</ul>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li>Docker 官方文档：<a target="_blank" rel="noopener" href="https://docs.docker.com/">https://docs.docker.com/</a></li>
+<li>Docker — 从入门到实践：<a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/">https://yeasy.gitbook.io/docker_practice/</a></li>
+<li>Docker容器实战(八) - 漫谈 Kubernetes 的本质：<a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/721206">https://developer.aliyun.com/article/721206</a></li>
+<li>美团容器平台架构及容器技术实践：<a target="_blank" rel="noopener" href="https://tech.meituan.com/2018/11/15/docker-architecture-and-evolution-practice.html">https://tech.meituan.com/2018/11/15/docker-architecture-and-evolution-practice.html</a></li>
+</ul>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Docker 技术概述</p><p><a href="https://xkniu.github.io/docker-introduction/">https://xkniu.github.io/docker-introduction/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>KK</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2021-04-02</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2022-06-11</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="icons" rel="noopener" target="_blank" title="Attribution" href="https://creativecommons.org/licenses/by/4.0/"><i class="icon fab fa-creative-commons-by"></i></a><a class="icons" rel="noopener" target="_blank" title="Noncommercial" href="https://creativecommons.org/licenses/by-nc/4.0/"><i class="icon fab fa-creative-commons-nc"></i></a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Docker/">Docker</a></div><!--!--></article></div><div class="card"><div class="card-content"><h3 class="menu-label has-text-centered">喜欢这篇文章？打赏一下作者吧</h3><div class="buttons is-centered"><a class="button donate" data-type="alipay"><span class="icon is-small"><i class="fab fa-alipay"></i></span><span>支付宝</span><span class="qrcode"><img src="/img/donates-alipay.png" alt="支付宝"></span></a><a class="button donate" data-type="wechat"><span class="icon is-small"><i class="fab fa-weixin"></i></span><span>微信</span><span class="qrcode"><img src="/img/donates-wechat.jpeg" alt="微信"></span></a></div></div></div><nav class="post-navigation mt-4 level is-mobile"><div class="level-end"><a class="article-nav-next level level-item link-muted" href="/github-pages-custom-domain/"><span class="level-item">为 Github Pages 绑定个人域名</span><i class="level-item fas fa-chevron-right"></i></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "57d6959d2d56762ae31bf8300040f33c",
+            repo: "blog-comment",
+            owner: "xkniu",
+            clientID: "74640f8980cd18356f2c",
+            clientSecret: "1a4c30f22cd32e4400221a14d4baaff26a78cd6f",
+            admin: ["xkniu"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            proxy: "https://cors-anywhere.azm.workers.dev/https://github.com/login/oauth/access_token",
+            
+            enableHotKey: true,
+            language: "zh-CN",
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-3-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#概要"><span class="level-left"><span class="level-item">1</span><span class="level-item">概要</span></span></a></li><li><a class="level is-mobile" href="#为什么使用-Docker"><span class="level-left"><span class="level-item">2</span><span class="level-item">为什么使用 Docker</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#解决了什么问题"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">解决了什么问题</span></span></a></li><li><a class="level is-mobile" href="#Docker-与虚拟机对比"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">Docker 与虚拟机对比</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Docker-技术原理"><span class="level-left"><span class="level-item">3</span><span class="level-item">Docker 技术原理</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Docker-架构"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">Docker 架构</span></span></a></li><li><a class="level is-mobile" href="#基本概念"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">基本概念</span></span></a></li><li><a class="level is-mobile" href="#底层原理"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">底层原理</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#rootfs-amp-Union-FS"><span class="level-left"><span class="level-item">3.3.1</span><span class="level-item">rootfs &amp; Union FS</span></span></a></li><li><a class="level is-mobile" href="#namespace-amp-cgroups"><span class="level-left"><span class="level-item">3.3.2</span><span class="level-item">namespace &amp; cgroups</span></span></a></li></ul></li></ul></li><li><a class="level is-mobile" href="#Docker-从单机到集群"><span class="level-left"><span class="level-item">4</span><span class="level-item">Docker 从单机到集群</span></span></a></li><li><a class="level is-mobile" href="#参考资料"><span class="level-left"><span class="level-item">5</span><span class="level-item">参考资料</span></span></a></li></ul></div></div><script src="/js/toc.js" defer></script></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/">KK 的博客</a><p class="is-size-7"><span>&copy; 2022 KK</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><span id="busuanzi_container_site_uv">共<span id="busuanzi_value_site_uv">0</span>个访客</span></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Attribution 4.0 International" href="https://creativecommons.org/licenses/by/4.0/"><i class="fab fa-creative-commons-by"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-CN");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.6.8/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><!--!--><!--!--><!--!--><script src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
