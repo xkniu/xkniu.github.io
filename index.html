@@ -1,17 +1,19 @@
 <!DOCTYPE html>
-<html lang=en>
+<html lang=zh>
 <head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta property="og:type" content="website">
+    <meta name="description" content="Hi, I’m Xuekai Niu, a software engineer. This is my personal blog, sharing my life and thoughts.​​">
+<meta property="og:type" content="website">
 <meta property="og:title" content="Xuekai&#39;s Blog">
-<meta property="og:url" content="http://example.com/index.html">
+<meta property="og:url" content="http://xkniu.github.io/index.html">
 <meta property="og:site_name" content="Xuekai&#39;s Blog">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="Xuekai">
+<meta property="og:description" content="Hi, I’m Xuekai Niu, a software engineer. This is my personal blog, sharing my life and thoughts.​​">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Xuekai Niu">
 <meta name="twitter:card" content="summary">
     
     
@@ -71,16 +73,18 @@
   <div id="nav">
     <ul>
       <li class="icon">
-        <a href="#" aria-label="Menu"><i class="fa-solid fa-bars fa-2x"></i></a>
+        <a href="#" aria-label="目录"><i class="fa-solid fa-bars fa-2x"></i></a>
       </li>
       <!--
-     --><li><a href="/">Home</a></li><!--
+     --><li><a href="/">首页</a></li><!--
    --><!--
-     --><li><a href="/about/">About</a></li><!--
+     --><li><a href="/archives/">归档</a></li><!--
    --><!--
-     --><li><a href="/archives/">Writing</a></li><!--
+     --><li><a href="/tags/">标签</a></li><!--
    --><!--
-     --><li><a target="_blank" rel="noopener" href="http://github.com/xkniu">Projects</a></li><!--
+     --><li><a href="/about/">关于</a></li><!--
+   --><!--
+     --><li><a href="/search/">搜索</a></li><!--
    -->
     </ul>
   </div>
@@ -89,9 +93,12 @@
         
         <section id="about" class="p-note">
   
+    <p>Hi, I’m Xuekai Niu, a software engineer. This is my personal blog, sharing my life and thoughts.​​</p>
+
+  
   
     <p>
-      Find me on
+      在这里找到我：
       
       
       
@@ -101,7 +108,7 @@
             <i class="fa-brands fa-github"></i><!--
       ---></a><!--
     ---><!--
-    ---> and 
+    --->， 
         
       
         
@@ -110,6 +117,15 @@
             <i class="fa-brands fa-weibo"></i><!--
       ---></a><!--
     ---><!--
+    ---> 和 
+        
+      
+        
+        
+          <a class="icon u-email" target="_blank" rel="noopener" href="your-mail-url" aria-label="@your-mail-handle" title="@your-mail-handle">
+            <i class="fa-solid fa-envelope"></i><!--
+      ---></a>
+        <!--
     --->.
         
       
@@ -118,7 +134,7 @@
 </section>
 
 <section id="writing">
-  <span class="h1"><a href="/archives/">Writing</a></span>
+  <span class="h1"><a href="/archives/">文章</a></span>
   
   <ul class="post-list">
     
@@ -131,7 +147,7 @@
     <div class="meta">
       
         
-          <time datetime="2025-06-02T16:01:00.505Z" class="dt-published" itemprop="datePublished">2025-06-03</time>
+          <time datetime="2025-06-04T16:43:24.797Z" class="dt-published" itemprop="datePublished">2025-06-05</time>
         
       
     </div>
@@ -139,7 +155,7 @@
 
         <span>
     
-        <a class="" href="/2025/06/03/hello-world/">Hello World</a>
+        <a class="" href="/2025/06/05/hello-world/">Hello World</a>
     
 
 
@@ -159,19 +175,21 @@
     
     
     2016-2025
-    Xuekai
+    Xuekai Niu
   </div>
   <div class="footer-right">
     <nav>
       <ul>
         <!--
-       --><li><a href="/">Home</a></li><!--
+       --><li><a href="/">首页</a></li><!--
      --><!--
-       --><li><a href="/about/">About</a></li><!--
+       --><li><a href="/archives/">归档</a></li><!--
      --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
+       --><li><a href="/tags/">标签</a></li><!--
      --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/xkniu">Projects</a></li><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
      -->
       </ul>
     </nav>
@@ -185,6 +203,29 @@
 
   <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
 
+
+<!-- fonts -->
+  <link rel="preload"
+    href="//fonts.font.im/css?family=Noto+Sans+SC:wght@400;700&display=swap"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript>
+    <link
+      rel="stylesheet"
+      href="//fonts.font.im/css?family=Noto+Sans+SC:wght@400;700&display=swap"/>
+  </noscript>
+  
+  <link rel="preload"
+    href="//fonts.font.im/css?family=Noto+Sans+Mono:wght@400;700&display=swap"
+    as="style"
+    onload="this.onload=null;this.rel='stylesheet'"
+  />
+  <noscript>
+    <link
+      rel="stylesheet"
+      href="//fonts.font.im/css?family=Noto+Sans+Mono:wght@400;700&display=swap"/>
+  </noscript>
 
     <!-- jquery -->
 
@@ -201,6 +242,16 @@
 <!-- search -->
 
 <!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2e0f36d765e07bcb0f917b06157b0b65";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
 
 <!-- Cloudflare Analytics -->
 
