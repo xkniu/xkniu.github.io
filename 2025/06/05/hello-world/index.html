@@ -35,6 +35,10 @@
         
       
     
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.bytedance.com " crossorigin>
+    <link rel="preload"  as="style" crossorigin href="https://fonts.bytedance.com/css2?family=Inter:wght@200;400;700&family=JetBrains+Mono:wght@200;400;700&display=fallback " onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" as="style" crossorigin href="https://fonts.bytedance.com/css2?family=Noto+Sans+SC:wght@400;700&family=Noto+Sans+Mono:wght@400;700&display=fallback " onload="this.onload=null;this.rel='stylesheet'">
     <!-- title -->
     <title>Hello World</title>
     <!-- async scripts -->
@@ -83,6 +87,8 @@
     <span id="actions">
       <ul>
         
+        
+        <li><a class="icon" aria-label="下一篇" href="/2018/11/17/the-pomodoro-technique/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
