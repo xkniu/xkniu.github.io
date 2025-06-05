@@ -419,7 +419,7 @@ body table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 12px;
+  font-size: 13px;
   overflow: auto;
   display: block;
 }
@@ -428,7 +428,7 @@ body th {
   border-bottom: 1px dashed #666;
   color: #383838;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 14px;
 }
 body td {
   padding: 0 8px;
@@ -476,7 +476,7 @@ body {
   background-color: #fff;
   color: #383838;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 15px;
   font-family: "Inter", monospace, "Noto Sans SC";
   line-height: 1.725;
   text-rendering: geometricPrecision;
@@ -841,7 +841,7 @@ body {
 }
 #header-post #toc .toc-level-2 {
   color: #383838;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 #header-post #toc .toc-level-2:before {
   color: #2bbc8a;
@@ -849,11 +849,11 @@ body {
 }
 #header-post #toc .toc-level-3 {
   color: #666;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
 }
 #header-post #toc .toc-level-4 {
   color: #525252;
-  font-size: 0.4rem;
+  font-size: 0.5rem;
 }
 #header-post #toc .toc-level-5 {
   display: none;
@@ -1021,7 +1021,7 @@ body {
 }
 #footer-post #toc-footer .toc-level-2 {
   color: #383838;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
 }
 #footer-post #toc-footer .toc-level-2:before {
   color: #2bbc8a;
@@ -1029,7 +1029,7 @@ body {
 }
 #footer-post #toc-footer .toc-level-3 {
   color: #666;
-  font-size: 0.7rem;
+  font-size: 0.8rem;
   line-height: 15px;
 }
 #footer-post #toc-footer .toc-level-4 {
@@ -1410,7 +1410,7 @@ article .content .caption {
   color: #fff;
   font-display: swap;
   font-weight: 400;
-  font-size: 11.200000000000001px;
+  font-size: 12px;
   font-family: "Inter", monospace, "Noto Sans SC";
   line-height: 1.725;
   text-rendering: geometricPrecision;
@@ -1577,7 +1577,7 @@ pre {
   border: 1px dotted #666;
   border-radius: 4px;
   font-size: 13px;
-  font-family: "JetBrains Mono", monospace, "Noto Sans Mono";
+  font-family: "Fira Code", monospace, "Noto Sans Mono";
   line-height: 22px;
   -webkit-border-radius: 4px;
 }
@@ -1598,7 +1598,7 @@ code {
   padding: 10px 15px;
   border-radius: 4px;
   background: #fafafa;
-  font-family: "JetBrains Mono", monospace, "Noto Sans Mono";
+  font-family: "Fira Code", monospace, "Noto Sans Mono";
   -webkit-border-radius: 4px;
 }
 .highlight figcaption {
