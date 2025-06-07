@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="Shell 作为一个历史悠久的效率工具，它提供了很多方便的工具，提高我们操作计算机的效率。然而被现代各种便利操作熏陶了的我们，可能对一些默认的命令的效率并不满意了。那么如何更好的利用好 Shell 呢？ tl;dr: 一些很好用的命令列表：  tldr: 查询一个命令的常用用法 z: 快速目录跳转 fzf: 文件模糊搜索 ag：代码快速搜索 fuck: 自动纠正错误命令 httpie: 更好用的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="现代化 Shell 使用指南">
+<meta property="og:url" content="http://xkniu.github.io/2017/04/23/using-shell-with-the-time/index.html">
+<meta property="og:site_name" content="Xuekai&#39;s Blog">
+<meta property="og:description" content="Shell 作为一个历史悠久的效率工具，它提供了很多方便的工具，提高我们操作计算机的效率。然而被现代各种便利操作熏陶了的我们，可能对一些默认的命令的效率并不满意了。那么如何更好的利用好 Shell 呢？ tl;dr: 一些很好用的命令列表：  tldr: 查询一个命令的常用用法 z: 快速目录跳转 fzf: 文件模糊搜索 ag：代码快速搜索 fuck: 自动纠正错误命令 httpie: 更好用的">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-04-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-06-07T09:24:44.512Z">
+<meta property="article:author" content="Xuekai Niu">
+<meta property="article:tag" content="工具">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preload"  as="style" crossorigin href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Noto+Sans+SC:wght@400;700&family=Fira+Code:wght@400;700&family=Noto+Sans+Mono:wght@400;700&display=fallback " onload="this.onload=null;this.rel='stylesheet'">
+    <!-- title -->
+    <title>现代化 Shell 使用指南</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2018/11/17/the-pomodoro-technique/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2016/10/15/personal-macbook-configuration/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/&text=现代化 Shell 使用指南"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/&title=现代化 Shell 使用指南"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/&is_video=false&description=现代化 Shell 使用指南"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=现代化 Shell 使用指南&body=Check out this article: http://xkniu.github.io/2017/04/23/using-shell-with-the-time/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/&title=现代化 Shell 使用指南"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/&title=现代化 Shell 使用指南"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/&title=现代化 Shell 使用指南"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/&title=现代化 Shell 使用指南"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/&name=现代化 Shell 使用指南&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/&t=现代化 Shell 使用指南"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#tldr-%E5%91%BD%E4%BB%A4%E5%A4%87%E5%BF%98"><span class="toc-number">1.</span> <span class="toc-text">tldr - 命令备忘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#z-%E4%BE%BF%E6%8D%B7%E7%9B%AE%E5%BD%95%E8%B7%B3%E8%BD%AC"><span class="toc-number">2.</span> <span class="toc-text">z - 便捷目录跳转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fzf-%E5%BF%AB%E9%80%9F%E6%A8%A1%E7%B3%8A%E6%90%9C%E7%B4%A2"><span class="toc-number">3.</span> <span class="toc-text">fzf - 快速模糊搜索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ag-%E4%BB%A3%E7%A0%81%E6%90%9C%E7%B4%A2"><span class="toc-number">4.</span> <span class="toc-text">ag - 代码搜索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fuck-%E5%91%BD%E4%BB%A4%E7%BA%A0%E9%94%99"><span class="toc-number">5.</span> <span class="toc-text">fuck - 命令纠错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#httpie-%E5%8F%8B%E5%A5%BD%E7%9A%84-HTTP-%E8%AF%B7%E6%B1%82%E5%B7%A5%E5%85%B7"><span class="toc-number">6.</span> <span class="toc-text">httpie - 友好的 HTTP 请求工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#htop-%E6%9B%B4%E7%9B%B4%E8%A7%82%E7%9A%84%E7%B3%BB%E7%BB%9F%E7%8A%B6%E6%80%81"><span class="toc-number">7.</span> <span class="toc-text">htop - 更直观的系统状态</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        现代化 Shell 使用指南
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Xuekai Niu</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-04-22T16:00:00.000Z" class="dt-published" itemprop="datePublished">2017-04-23</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/%E5%B7%A5%E5%85%B7/" rel="tag">工具</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <p>Shell 作为一个历史悠久的效率工具，它提供了很多方便的工具，提高我们操作计算机的效率。然而被现代各种便利操作熏陶了的我们，可能对一些默认的命令的效率并不满意了。那么如何更好的利用好 Shell 呢？</p>
+<p>tl;dr: 一些很好用的命令列表：</p>
+<ul>
+<li><code>tldr</code>: 查询一个命令的常用用法</li>
+<li><code>z</code>: 快速目录跳转</li>
+<li><code>fzf</code>: 文件模糊搜索</li>
+<li><code>ag</code>：代码快速搜索</li>
+<li><code>fuck</code>: 自动纠正错误命令</li>
+<li><code>httpie</code>: 更好用的 HTTP 请求工具</li>
+<li><code>htop</code>: <code>top</code> 的升级版</li>
+</ul>
+<p>本文只挑选了几个好用的工具来介绍，主要想表达的是现在有很多很好用的 shell 工具，它们比之前的古老版本有不少优势和进步，当你觉得你的某些操作效率不高时，可以考虑去了解一下有没有好的替代方案&#x2F;工具，察觉自己的低效操作并想办法改进总是应该的。</p>
+<h2 id="tldr-命令备忘"><a href="#tldr-命令备忘" class="headerlink" title="tldr - 命令备忘"></a>tldr - 命令备忘</h2><p>Linux 下有如此多的命令，有时我们会忘记某个命令的常用方法。这时我们通常会通过 <code>man</code> 或者 Google 来查询命令的用法，但这些结果通常并不简洁明了，我们可能需要花费一些时间来找到我们想要的用法。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/tldr-pages/tldr"><code>tldr</code></a> 就是为了这种场景而生的，它会很简洁的介绍一个命令，并列出它最常用的一些用法。根据二八法则原理，你很少会用到一些命令的高级用法，常用用法已经可以满足你的需求。你可能经常在某些地方看到「tl;dr」这个缩写，它的意思是“Too long, didn’t read”，意思是就是“文章太长不想看？只看这里就行了”。</p>
+<p>首先在 mac 下通过 brew 安装 <code>tldr</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 tldr</span></span><br><span class="line">brew install tldr</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新 tldr 的数据</span></span><br><span class="line">tldr --update</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>tldr</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询 find 的常用用法</span></span><br><span class="line">tldr find</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">find</span><br><span class="line"></span><br><span class="line">Find files under the given directory tree, recursively.</span><br><span class="line"></span><br><span class="line">- Find files by extension:</span><br><span class="line">    find root_path -name &#x27;*.ext&#x27;</span><br><span class="line"></span><br><span class="line">- Find files matching path pattern:</span><br><span class="line">    find root_path -path &#x27;**/lib/**/*.ext&#x27;</span><br><span class="line"></span><br><span class="line">- Run a command for each file, use &#123;&#125; within the command to access the filename:</span><br><span class="line">    find root_path -name &#x27;*.ext&#x27; -exec wc -l &#123;&#125; \;</span><br><span class="line"></span><br><span class="line">- Find files modified in the last 24-hour period:</span><br><span class="line">    find root_path -mtime -1</span><br><span class="line"></span><br><span class="line">- Find files using case insensitive name matching, of a certain size:</span><br><span class="line">    find root_path -size +500k -size -10MB -iname &#x27;*.TaR.gZ&#x27;</span><br><span class="line"></span><br><span class="line">- Delete files by name, older than 180 days:</span><br><span class="line">    find root_path -name &#x27;*.ext&#x27; -mtime +180 -delete</span><br><span class="line"></span><br><span class="line">- Find files matching more than one search criteria:</span><br><span class="line">    find root_path -name &#x27;*.py&#x27; -or -name &#x27;*.r&#x27;</span><br><span class="line"></span><br><span class="line">- Find files matching a given pattern, while excluding specific paths:</span><br><span class="line">    find root_path -name &#x27;*.py&#x27; -not -path &#x27;*/site-packages/*&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>是不是比 <code>man</code> 的结果好用多了。</p>
+<h2 id="z-便捷目录跳转"><a href="#z-便捷目录跳转" class="headerlink" title="z - 便捷目录跳转"></a>z - 便捷目录跳转</h2><p>每次跳到常用目录，要输入很长的路径？需要在两个&#x2F;多个目录来回切换？<code>cd</code> 不够好用，<code>pushd/popd/dirs</code> 在一定程度上解决了这个问题，通过将一些目录压到栈中来来回跳转，但还是不够智能。</p>
+<p>在这个智能时代，需要一些命令让跳转更加随心所欲，于是一些更加智能的命令被开发出来了。新的命令的主要思路就是，记住你常用的目录，然后等你跳转了一定时间后，就可以用很短的名称（前缀）跳转到常去目录了。</p>
+<p>这类工具中比较有名的有 <a target="_blank" rel="noopener" href="https://github.com/wting/autojump"><code>autojump</code></a>、<a target="_blank" rel="noopener" href="https://github.com/rupa/z"><code>z</code></a>、<a target="_blank" rel="noopener" href="https://github.com/clvv/fasd"><code>fasd</code></a>。它们的功能都是类似的，不过整体来说 fasd 功能最强大，不仅支持快速跳转目录，也支持快速打开文件；z 和 autojump 功能基本相同，z 的性能会好一些。我目前主要使用 <code>z</code>。</p>
+<p>安装 z：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install z</span><br></pre></td></tr></table></figure>
+
+<p>在 <em>~&#x2F;.bash_profile</em> 中增加配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># z enabled</span></span><br><span class="line">[ -f /usr/local/etc/profile.d/z.sh ] &amp;&amp; . /usr/local/etc/profile.d/z.sh</span><br></pre></td></tr></table></figure>
+
+<p>这里有一段这些工具的比较：</p>
+<blockquote>
+<p>这类工具中最早的应该是大名鼎鼎的autojump，因为它的快捷命令是j，所以大家也都习惯性地称其为j。autojump使用Python编写，对于Bash和Shell的支持都比较好。但是可能是因为是Python写的吧，有的时候会感觉反应有些慢。</p>
+<p>有了j之后，又有了z。z的介绍就是”更好的j”。它的功能和j基本是相同的，不过它使用Shell脚本编写，更加简洁，基本上不会拖慢终端的响应速度。我比较喜欢简洁的，现在看来Github上大部分人也是, z得到了3000+的star，超越了它的前辈autojump。</p>
+<p>然后人们还不满足，于是又有了大杀器Fasd，Fasd不光会记录目录，还会记录文件，也就是说它可以做到快捷打开某个深层目录的文件。Fasd还可以通过配置，实现更加高级的功能。Fasd与Zsh的结合也非常好，可以使用tab灵活的在几个目录中选择。可能是由于Fasd太强大了，虽然它使用Shell脚本写的，但是在使用的时候还是会感觉拖慢了终端的速度，特别是在执行ls -l的时候，会感觉输出明显慢了一拍。</p>
+<p>—— <a target="_blank" rel="noopener" href="https://skyline75489.github.io/post/2014-12-13_j-z-and-fasd.html">https://skyline75489.github.io/post/2014-12-13_j-z-and-fasd.html</a></p>
+</blockquote>
+<h2 id="fzf-快速模糊搜索"><a href="#fzf-快速模糊搜索" class="headerlink" title="fzf - 快速模糊搜索"></a>fzf - 快速模糊搜索</h2><p><a target="_blank" rel="noopener" href="https://github.com/junegunn/fzf"><code>fzf</code></a> 是一个很高效的 fuzzy finder，它提供模糊搜索文件夹&#x2F;文件的功能。</p>
+<p>首先在 mac 下通过 brew 安装 <code>fzf</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 fzf</span></span><br><span class="line">brew install fzf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装完成 fzf 后，安装 shell 的快捷键支持</span></span><br><span class="line">/usr/local/opt/fzf/install</span><br></pre></td></tr></table></figure>
+
+<p>主要使用场景：</p>
+<ul>
+<li>查找文件：直接输入 <code>fzf</code>，或者使用快捷键 <code>&lt;ctrl-t&gt;</code> 呼出 fzf。使用快捷键调出的时候，前面可以有已经输入的命令，比如 <code>cat &lt;ctrl-t&gt;</code>。在 fzf 中输入关键字进行模糊搜索，使用 <code>&lt;ctrl-p&gt;/&lt;ctrl-n&gt;</code> 来上下选择结果。</li>
+<li>查找命令历史：安装 shell 的快捷键支持后，<code>fzf</code> 替换了系统默认的命令搜索 <code>&lt;ctrl-r&gt;</code>，呼出快捷键不变，使用起来更加好用了。</li>
+<li>命令后参数补全：命令参数中使用 <code>**&lt;TAB&gt;</code> 来触发补全，触发的场景可以参考<a target="_blank" rel="noopener" href="https://github.com/junegunn/fzf#fuzzy-completion-for-bash-and-zsh">这里</a></li>
+</ul>
+<h2 id="ag-代码搜索"><a href="#ag-代码搜索" class="headerlink" title="ag - 代码搜索"></a>ag - 代码搜索</h2><p><code>ag</code> 用来在文件中搜索关键字，是一个类似于 grep、ack 的命令。它的优点有：</p>
+<ul>
+<li>比 ack 还要快，这里有一篇<a target="_blank" rel="noopener" href="http://www.dongwm.com/archives/ack/">效率对比的文章</a></li>
+<li>可以忽略 <em>.gitignore</em> 中的文件</li>
+<li>命名更短，短就是效率…</li>
+</ul>
+<p>安装 ag：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install the_silver_searcher</span><br></pre></td></tr></table></figure>
+
+<p>使用方法和 grep 类似，可以用 <code>tldr ag</code> 了解下常用方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Find files containing &quot;foo&quot;, and print the line matches in context:</span></span><br><span class="line">ag foo</span><br><span class="line"></span><br><span class="line"><span class="comment"># Find files containing &quot;foo&quot;, but only list the filenames:</span></span><br><span class="line">ag -l foo</span><br><span class="line"></span><br><span class="line"><span class="comment"># Find files with a name matching &quot;foo&quot;:</span></span><br><span class="line">ag -g foo</span><br></pre></td></tr></table></figure>
+
+<h2 id="fuck-命令纠错"><a href="#fuck-命令纠错" class="headerlink" title="fuck - 命令纠错"></a>fuck - 命令纠错</h2><p>有时候我们会输错一些命令，比如 <code>git brnch</code>，这时只需要一个简单的命令 <code>fuck</code>，它会根据它预设的模式给出可能的正确命令，用起来就是这么简单粗暴。</p>
+<p>安装 thefuck：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install thefuck</span><br></pre></td></tr></table></figure>
+
+<p>在 <em>~&#x2F;.bash_profile</em> 中增加配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span> $(thefuck --<span class="built_in">alias</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="httpie-友好的-HTTP-请求工具"><a href="#httpie-友好的-HTTP-请求工具" class="headerlink" title="httpie - 友好的 HTTP 请求工具"></a>httpie - 友好的 HTTP 请求工具</h2><p><a target="_blank" rel="noopener" href="https://github.com/jakubroztocil/httpie"><code>httpie</code></a> 是一个对人类友好的 HTTP 请求模拟器，它的命令参数符合直觉，结果显示的也更清晰。<code>curl</code> 的参数就没那么容易记忆了，总是需要去查手册。</p>
+<p>安装 httpie：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install httpie</span><br></pre></td></tr></table></figure>
+
+<p>一些基本的用法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GET 访问某页面</span></span><br><span class="line">http example.org</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看具体的请求头</span></span><br><span class="line">http -v example.org</span><br><span class="line"></span><br><span class="line"><span class="comment"># 带 query string 的请求</span></span><br><span class="line">http www.google.com search==<span class="string">&#x27;HTTPie logo&#x27;</span> tbm==isch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改请求头</span></span><br><span class="line">http example.org  User-Agent:Bacon/1.0  <span class="string">&#x27;Cookie:valued-visitor=yes;foo=bar&#x27;</span>  X-Foo:Bar</span><br></pre></td></tr></table></figure>
+
+<h2 id="htop-更直观的系统状态"><a href="#htop-更直观的系统状态" class="headerlink" title="htop - 更直观的系统状态"></a>htop - 更直观的系统状态</h2><p><a target="_blank" rel="noopener" href="https://github.com/hishamhm/htop"><code>htop</code></a> 可以查看当前系统状态，可以当做是 top 的一个增强版本。它的界面更加直观并且支持鼠标操作，用一下你就知道好在哪里了。</p>
+<p>安装 htop：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install htop</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/nicolargo/glances"><code>glances</code></a> 又是 <code>htop</code> 的一个升级版，它提供更加详细的信息，并且是 C&#x2F;S 结构的，也就是说你可以监控其他机器的状态。</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#tldr-%E5%91%BD%E4%BB%A4%E5%A4%87%E5%BF%98"><span class="toc-number">1.</span> <span class="toc-text">tldr - 命令备忘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#z-%E4%BE%BF%E6%8D%B7%E7%9B%AE%E5%BD%95%E8%B7%B3%E8%BD%AC"><span class="toc-number">2.</span> <span class="toc-text">z - 便捷目录跳转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fzf-%E5%BF%AB%E9%80%9F%E6%A8%A1%E7%B3%8A%E6%90%9C%E7%B4%A2"><span class="toc-number">3.</span> <span class="toc-text">fzf - 快速模糊搜索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ag-%E4%BB%A3%E7%A0%81%E6%90%9C%E7%B4%A2"><span class="toc-number">4.</span> <span class="toc-text">ag - 代码搜索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fuck-%E5%91%BD%E4%BB%A4%E7%BA%A0%E9%94%99"><span class="toc-number">5.</span> <span class="toc-text">fuck - 命令纠错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#httpie-%E5%8F%8B%E5%A5%BD%E7%9A%84-HTTP-%E8%AF%B7%E6%B1%82%E5%B7%A5%E5%85%B7"><span class="toc-number">6.</span> <span class="toc-text">httpie - 友好的 HTTP 请求工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#htop-%E6%9B%B4%E7%9B%B4%E8%A7%82%E7%9A%84%E7%B3%BB%E7%BB%9F%E7%8A%B6%E6%80%81"><span class="toc-number">7.</span> <span class="toc-text">htop - 更直观的系统状态</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/&text=现代化 Shell 使用指南"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/&title=现代化 Shell 使用指南"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/&is_video=false&description=现代化 Shell 使用指南"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=现代化 Shell 使用指南&body=Check out this article: http://xkniu.github.io/2017/04/23/using-shell-with-the-time/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/&title=现代化 Shell 使用指南"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/&title=现代化 Shell 使用指南"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/&title=现代化 Shell 使用指南"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/&title=现代化 Shell 使用指南"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/&name=现代化 Shell 使用指南&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://xkniu.github.io/2017/04/23/using-shell-with-the-time/&t=现代化 Shell 使用指南"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    Xuekai Niu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2e0f36d765e07bcb0f917b06157b0b65";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'xkniu/blog-comment';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

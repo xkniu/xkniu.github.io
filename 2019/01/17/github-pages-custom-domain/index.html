@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="2020-12-27 更新：由于使用频率比较低，域名到期后不再续期，继续寄人篱下。  一直用着免费的 Github Pages 搭载个人博客，突然想要一个自己的域名。个人域名的主要优点有：  方便记忆，也就更方便传播 使用别人的二级域名，总是寄人篱下，还是有个自己的一亩三分地比较好  然后就去为博客绑定了个人域名，下面讲述下主要流程。 主要流程如下：  选择一个域名提供商并购买域名 配置 DNS">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为 Github Pages 绑定个人域名">
+<meta property="og:url" content="http://xkniu.github.io/2019/01/17/github-pages-custom-domain/index.html">
+<meta property="og:site_name" content="Xuekai&#39;s Blog">
+<meta property="og:description" content="2020-12-27 更新：由于使用频率比较低，域名到期后不再续期，继续寄人篱下。  一直用着免费的 Github Pages 搭载个人博客，突然想要一个自己的域名。个人域名的主要优点有：  方便记忆，也就更方便传播 使用别人的二级域名，总是寄人篱下，还是有个自己的一亩三分地比较好  然后就去为博客绑定了个人域名，下面讲述下主要流程。 主要流程如下：  选择一个域名提供商并购买域名 配置 DNS">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-01-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-06-07T09:20:29.506Z">
+<meta property="article:author" content="Xuekai Niu">
+<meta property="article:tag" content="关于本站">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+    <link rel="preload"  as="style" crossorigin href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&family=Noto+Sans+SC:wght@400;700&family=Fira+Code:wght@400;700&family=Noto+Sans+Mono:wght@400;700&display=fallback " onload="this.onload=null;this.rel='stylesheet'">
+    <!-- title -->
+    <title>为 Github Pages 绑定个人域名</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2021/04/02/docker-introduction/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2018/11/17/the-pomodoro-technique/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/&text=为 Github Pages 绑定个人域名"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/&title=为 Github Pages 绑定个人域名"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/&is_video=false&description=为 Github Pages 绑定个人域名"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=为 Github Pages 绑定个人域名&body=Check out this article: http://xkniu.github.io/2019/01/17/github-pages-custom-domain/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/&title=为 Github Pages 绑定个人域名"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/&title=为 Github Pages 绑定个人域名"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/&title=为 Github Pages 绑定个人域名"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/&title=为 Github Pages 绑定个人域名"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/&name=为 Github Pages 绑定个人域名&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/&t=为 Github Pages 绑定个人域名"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AD%E4%B9%B0%E5%9F%9F%E5%90%8D"><span class="toc-number">1.</span> <span class="toc-text">购买域名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-DNS"><span class="toc-number">2.</span> <span class="toc-text">配置 DNS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-Github-Pages"><span class="toc-number">3.</span> <span class="toc-text">配置 Github Pages</span></a></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        为 Github Pages 绑定个人域名
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">Xuekai Niu</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-01-16T16:00:00.000Z" class="dt-published" itemprop="datePublished">2019-01-17</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/%E5%85%B3%E4%BA%8E%E6%9C%AC%E7%AB%99/" rel="tag">关于本站</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <blockquote>
+<p>2020-12-27 更新：由于使用频率比较低，域名到期后不再续期，继续寄人篱下。</p>
+</blockquote>
+<p>一直用着免费的 Github Pages 搭载个人博客，突然想要一个自己的域名。个人域名的主要优点有：</p>
+<ul>
+<li>方便记忆，也就更方便传播</li>
+<li>使用别人的二级域名，总是寄人篱下，还是有个自己的一亩三分地比较好</li>
+</ul>
+<p>然后就去为博客绑定了个人域名，下面讲述下主要流程。</p>
+<p>主要流程如下：</p>
+<ol>
+<li>选择一个域名提供商并购买域名</li>
+<li>配置 DNS 信息</li>
+<li>配置 Github Pages CNAME 信息</li>
+</ol>
+<h2 id="购买域名"><a href="#购买域名" class="headerlink" title="购买域名"></a>购买域名</h2><p>可以选择国内或国外的域名提供商来购买域名，国内通常需要个人实名备案，下面是一些常用的域名商：</p>
+<ul>
+<li>国内的域名商：阿里云、腾讯云</li>
+<li>国外的域名商：Godaddy、Dynadot</li>
+</ul>
+<p>我选择使用 <a target="_blank" rel="noopener" href="https://www.dynadot.com/">Dynadot</a> 作为我的域名提供商，在主页搜索你想要的域名，如果还没有被他人注册，选择购买即可。</p>
+<h2 id="配置-DNS"><a href="#配置-DNS" class="headerlink" title="配置 DNS"></a>配置 DNS</h2><p>为你的域名配置 DNS 信息。配置域名 DNS 时，有很多种配置方式，我期望的效果是：</p>
+<ul>
+<li>使用主域名作为主要的网站地址</li>
+<li>www 的子域名重定向到主域名，即访问 www 子域名时，跳转到主域名（浏览器地址中展示主域名）</li>
+<li>强行跳转到 HTTPS 域名</li>
+</ul>
+<p>以 Dynadot 为例，选择「My Account - My Domains - Manage Domains - Select your domain - DNS Settings - Custom DNS」，然后：</p>
+<ol>
+<li>在 Domain Record 下添加一个 CNAME 指向你的 Github Pages 地址 <code>username.github.io</code></li>
+<li>在 Subdomain Records 下添加 Forward 301 记录，将 www 子域名重定向到 <code>https://yourdomain.com</code></li>
+</ol>
+<p>通常主域名是不建议使用 CNAME 跳转的，因为 DNS 规范中返回 CNAME 时，不允许和其他 Resource Record 一起返回，它可能会造成一些问题，详情可以参考<a target="_blank" rel="noopener" href="https://medium.freecodecamp.org/why-cant-a-domain-s-root-be-a-cname-8cbab38e5f5c">这篇</a>文章。但如果你又不想配置 A 记录（改变 IP 时不太方便），你可以使用 <code>ALIAS</code>、<code>ANAME</code>，不过 Dynadot 只支持 CNAME 或者 A 记录，所以我还是选择了配置 CNAME。</p>
+<h2 id="配置-Github-Pages"><a href="#配置-Github-Pages" class="headerlink" title="配置 Github Pages"></a>配置 Github Pages</h2><p>完成 DNS 的配置后，还需要在你的 Github Pages Repo 中增加一个 CNAME 文件，文件的内容为你使用的域名地址（不要 http 前缀），只能添加一条。例如可以配置为：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yourdomain.com</span><br></pre></td></tr></table></figure>
+
+<p>Github 会根据你配置的 CNAME，自动为你做 www 子域名的重定向，你也可以使用 DNS 配置的重定向。</p>
+<p>感谢 <a target="_blank" rel="noopener" href="https://letsencrypt.org/">Let’s Encrypt</a> 让我们能够用上开源免费的 HTTPS 证书，Github Pages 也默认对它<a target="_blank" rel="noopener" href="https://blog.github.com/2018-05-01-github-pages-custom-domains-https/">支持</a>。简单的在 Repo 的「Settings - GitHub Pages - Enforce HTTPS」打钩开启，即可完成 HTTPS 的配置。</p>
+
+  </div>
+</article>
+
+
+    <div class="blog-post-comments">
+        <div id="utterances_thread">
+            <noscript>加载评论需要在浏览器启用 JavaScript 脚本支持。</noscript>
+        </div>
+    </div>
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">首页</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/about/">关于</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%AD%E4%B9%B0%E5%9F%9F%E5%90%8D"><span class="toc-number">1.</span> <span class="toc-text">购买域名</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-DNS"><span class="toc-number">2.</span> <span class="toc-text">配置 DNS</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE-Github-Pages"><span class="toc-number">3.</span> <span class="toc-text">配置 Github Pages</span></a></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/&text=为 Github Pages 绑定个人域名"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/&title=为 Github Pages 绑定个人域名"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/&is_video=false&description=为 Github Pages 绑定个人域名"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=为 Github Pages 绑定个人域名&body=Check out this article: http://xkniu.github.io/2019/01/17/github-pages-custom-domain/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/&title=为 Github Pages 绑定个人域名"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/&title=为 Github Pages 绑定个人域名"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/&title=为 Github Pages 绑定个人域名"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/&title=为 Github Pages 绑定个人域名"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/&name=为 Github Pages 绑定个人域名&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://xkniu.github.io/2019/01/17/github-pages-custom-domain/&t=为 Github Pages 绑定个人域名"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2025
+    Xuekai Niu
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">首页</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/about/">关于</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+  <script type="text/javascript">
+        var _hmt = _hmt || [];
+        (function() {
+          var hm = document.createElement("script");
+          hm.src = "https://hm.baidu.com/hm.js?2e0f36d765e07bcb0f917b06157b0b65";
+          var s = document.getElementsByTagName("script")[0];
+          s.parentNode.insertBefore(hm, s);
+        })();
+        </script>
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+    <script type="text/javascript">
+      var utterances_repo = 'xkniu/blog-comment';
+      var utterances_issue_term = 'pathname';
+      var utterances_label = 'Comment';
+      var utterances_theme = 'github-light';
+
+      (function(){
+          var script = document.createElement('script');
+
+          script.src = 'https://utteranc.es/client.js';
+          script.setAttribute('repo', utterances_repo);
+          script.setAttribute('issue-term', 'pathname');
+          script.setAttribute('label', utterances_label);
+          script.setAttribute('theme', utterances_theme);
+          script.setAttribute('crossorigin', 'anonymous');
+          script.async = true;
+          (document.getElementById('utterances_thread')).appendChild(script);
+      }());
+  </script>
+
+</body>
+</html>

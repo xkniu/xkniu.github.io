@@ -477,7 +477,7 @@ body {
   color: #383838;
   font-weight: 400;
   font-size: 15px;
-  font-family: "Inter", monospace, "Noto Sans SC";
+  font-family: 'Noto Sans', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "Microsoft YaHei", sans-serif;
   line-height: 1.725;
   text-rendering: geometricPrecision;
   -moz-osx-font-smoothing: grayscale;
@@ -621,7 +621,7 @@ body {
 #header #nav {
   color: #2bbc8a;
   letter-spacing: 0.01em;
-  font-weight: 200;
+  font-weight: normal;
   font-style: normal;
   font-size: 0.8rem;
 }
@@ -772,7 +772,7 @@ body {
 #header-post #nav {
   color: #2bbc8a;
   letter-spacing: 0.01em;
-  font-weight: 200;
+  font-weight: normal;
   font-style: normal;
   font-size: 0.8rem;
 }
@@ -1411,7 +1411,7 @@ article .content .caption {
   font-display: swap;
   font-weight: 400;
   font-size: 12px;
-  font-family: "Inter", monospace, "Noto Sans SC";
+  font-family: 'Noto Sans', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, "Microsoft YaHei", sans-serif;
   line-height: 1.725;
   text-rendering: geometricPrecision;
   text-align: center;
@@ -1577,7 +1577,7 @@ pre {
   border: 1px dotted #666;
   border-radius: 4px;
   font-size: 13px;
-  font-family: "Fira Code", monospace, "Noto Sans Mono";
+  font-family: "Fira Code", "Noto Sans Mono", Consolas, Menlo, monospace;
   line-height: 22px;
   -webkit-border-radius: 4px;
 }
@@ -1598,7 +1598,7 @@ code {
   padding: 10px 15px;
   border-radius: 4px;
   background: #fafafa;
-  font-family: "Fira Code", monospace, "Noto Sans Mono";
+  font-family: "Fira Code", "Noto Sans Mono", Consolas, Menlo, monospace;
   -webkit-border-radius: 4px;
 }
 .highlight figcaption {
