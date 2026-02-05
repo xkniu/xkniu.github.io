@@ -1,0 +1,969 @@
+
+<!DOCTYPE html><html lang="zh-CN">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="hexo-theme" content="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1" theme-name="Stellar" theme-version="1.33.1">
+  
+  
+  <meta name="generator" content="Hexo 7.3.0">
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel="preconnect" href="https://npm.elemecdn.com" crossorigin>
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000">
+  <meta name="theme-color" content="#f9fafb">
+  <title>现代化 Shell 使用指南 - 月汐</title>
+
+  
+    <meta name="description" content="Shell 作为一个历史悠久的效率工具，它提供了很多方便的工具，提高我们操作计算机的效率。然而被现代各种便利操作熏陶了的我们，可能对一些默认的命令的效率并不满意了。那么如何更好的利用好 Shell 呢？ tl;dr: 一些很好用的命令列表：  tldr: 查询一个命令的常用用法 z: 快速目录跳转 fzf: 文件模糊搜索 ag：代码快速搜索 fuck: 自动纠正错误命令 httpie: 更好用的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="现代化 Shell 使用指南">
+<meta property="og:url" content="http://example.com/2017/04/23/using-shell-with-the-time/">
+<meta property="og:site_name" content="月汐">
+<meta property="og:description" content="Shell 作为一个历史悠久的效率工具，它提供了很多方便的工具，提高我们操作计算机的效率。然而被现代各种便利操作熏陶了的我们，可能对一些默认的命令的效率并不满意了。那么如何更好的利用好 Shell 呢？ tl;dr: 一些很好用的命令列表：  tldr: 查询一个命令的常用用法 z: 快速目录跳转 fzf: 文件模糊搜索 ag：代码快速搜索 fuck: 自动纠正错误命令 httpie: 更好用的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/assets/icon.svg">
+<meta property="article:published_time" content="2017-04-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-04-22T16:00:00.000Z">
+<meta property="article:author" content="Xuekai Niu">
+<meta property="article:tag" content="工具">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/assets/icon.svg">
+  
+  
+  
+  <meta name="keywords" content="工具">
+
+  <!-- feed -->
+  
+
+  <link rel="stylesheet" href="/css/main.css?v=1.33.1">
+
+
+  
+    <link rel="shortcut icon" href="/assets/icon.svg">
+  
+
+  
+
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Xuekai Niu","sameAs":[],"image":"/assets/icon.svg"},"dateCreated":"2017-04-23T00:00:00+08:00","dateModified":"2017-04-23T00:00:00+08:00","datePublished":"2017-04-23T00:00:00+08:00","description":"","headline":"现代化 Shell 使用指南","mainEntityOfPage":{"@type":"WebPage","@id":"http://example.com/2017/04/23/using-shell-with-the-time/"},"publisher":{"@type":"Organization","name":"Xuekai Niu","sameAs":[],"image":"/assets/icon.svg","logo":{"@type":"ImageObject","url":"/assets/icon.svg"}},"url":"http://example.com/2017/04/23/using-shell-with-the-time/","keywords":"工具","image":[]}</script>
+  <link rel="stylesheet" href="https://npm.elemecdn.com/lxgw-wenkai-screen-webfont/style.css" media="print" onload="this.media='all'">
+</head>
+<body>
+
+<div class="l_body content" id="start" layout="post" type="tech" ><aside class="l_left"><div class="sidebg"></div><div class="leftbar-container">
+
+
+<header class="header"><div class="logo-wrap"><a class="avatar" href="/about/"><div class="bg" style="opacity:0;background-image:url(https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/rainbow64@3x.webp);"></div><img no-lazy class="avatar" src="/assets/icon.svg" onerror="javascript:this.classList.add('error');this.src='https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/image/2659360.svg';"></a><a class="title" href="/"><div class="main">月汐</div><div class="sub normal cap">生活 & 思考的碎片</div><div class="sub hover cap" style="opacity:0"> Live for the long game</div></a></div></header>
+
+<div class="nav-area">
+
+<nav class="menu dis-select"><a class="nav-item active" title="文章" href="/"><span>文章</span></a><a class="nav-item" title="关于" href="/about/"><span>关于</span></a></nav>
+</div>
+<div class="widgets">
+<div class="search-wrapper" id="search-wrapper"><form class="search-form"><a class="search-button" onclick="document.getElementById(&quot;search-input&quot;).focus();"><svg t="1705074644177" viewBox="0 0 1025 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1560" width="200" height="200"><path d="M1008.839137 935.96571L792.364903 719.491476a56.783488 56.783488 0 0 0-80.152866 0 358.53545 358.53545 0 1 1 100.857314-335.166073 362.840335 362.840335 0 0 1-3.689902 170.145468 51.248635 51.248635 0 1 0 99.217358 26.444296 462.057693 462.057693 0 1 0-158.255785 242.303546l185.930047 185.725053a51.248635 51.248635 0 0 0 72.568068 0 51.248635 51.248635 0 0 0 0-72.978056z" p-id="1561"></path><path d="M616.479587 615.969233a50.428657 50.428657 0 0 0-61.498362-5.534852 174.655348 174.655348 0 0 1-177.525271 3.484907 49.403684 49.403684 0 0 0-58.833433 6.76482l-3.074918 2.869923a49.403684 49.403684 0 0 0 8.609771 78.10292 277.767601 277.767601 0 0 0 286.992355-5.739847 49.403684 49.403684 0 0 0 8.404776-76.667958z" p-id="1562"></path></svg></a><input type="text" class="search-input" id="search-input" placeholder="站内搜索"></form><div id="search-result"></div><div class="search-no-result">没有找到内容！</div></div>
+
+
+
+<widget class="widget-wrapper recent post-list"><div class="widget-header dis-select"><span class="name">最近更新</span></div><div class="widget-body fs14"><a class="item title" href="/2021/04/09/docker-introduction/"><span class="title">Docker 技术概述</span></a><a class="item title" href="/2019/12/31/github-pages-custom-domain/"><span class="title">为 Github Pages 绑定域名</span></a><a class="item title" href="/2018/11/17/the-pomodoro-technique/"><span class="title">了解番茄工作法</span></a><a class="item title" href="/2017/04/23/using-shell-with-the-time/"><span class="title">现代化 Shell 使用指南</span></a><a class="item title" href="/2016/10/15/personal-macbook-configuration/"><span class="title">个人的 MacBook 配置</span></a></div></widget>
+</div>
+
+</div></aside><div class="l_main" id="main">
+
+
+
+
+
+<div class="article banner top">
+  <div class="content">
+    <div class="top bread-nav footnote"><div class="left"><div class="flex-row" id="breadcrumb"><a class="cap breadcrumb" href="/">主页</a>
+<span class="sep"></span><a class="cap breadcrumb" href="/">文章</a><span class="sep"></span><a class="cap breadcrumb-link" href="/categories/%E6%8A%80%E6%9C%AF/">技术</a></div>
+<div class="flex-row" id="post-meta"><span class="text created">发布于：<time datetime="2017-04-22T16:00:00.000Z">2017-04-23</time></span><span class="sep updated"></span><span class="text updated">更新于：<time datetime="2017-04-22T16:00:00.000Z">2017-04-23</time></span></div></div></div>
+    
+    <div class="bottom only-title">
+      
+      <div class="text-area">
+        <h1 class="text title"><span>现代化 Shell 使用指南</span></h1>
+        
+      </div>
+    </div>
+    
+  </div>
+  </div><article class="md-text content"><p>Shell 作为一个历史悠久的效率工具，它提供了很多方便的工具，提高我们操作计算机的效率。然而被现代各种便利操作熏陶了的我们，可能对一些默认的命令的效率并不满意了。那么如何更好的利用好 Shell 呢？</p>
+<p>tl;dr: 一些很好用的命令列表：</p>
+<ul>
+<li><code>tldr</code>: 查询一个命令的常用用法</li>
+<li><code>z</code>: 快速目录跳转</li>
+<li><code>fzf</code>: 文件模糊搜索</li>
+<li><code>ag</code>：代码快速搜索</li>
+<li><code>fuck</code>: 自动纠正错误命令</li>
+<li><code>httpie</code>: 更好用的 HTTP 请求工具</li>
+<li><code>htop</code>: <code>top</code> 的升级版</li>
+</ul>
+<p>本文只挑选了几个好用的工具来介绍，主要想表达的是现在有很多很好用的 shell 工具，它们比之前的古老版本有不少优势和进步，当你觉得你的某些操作效率不高时，可以考虑去了解一下有没有好的替代方案&#x2F;工具，察觉自己的低效操作并想办法改进总是应该的。</p>
+<h2 id="tldr-命令备忘"><a href="#tldr-命令备忘" class="headerlink" title="tldr - 命令备忘"></a>tldr - 命令备忘</h2><p>Linux 下有如此多的命令，有时我们会忘记某个命令的常用方法。这时我们通常会通过 <code>man</code> 或者 Google 来查询命令的用法，但这些结果通常并不简洁明了，我们可能需要花费一些时间来找到我们想要的用法。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/tldr-pages/tldr"><code>tldr</code></a> 就是为了这种场景而生的，它会很简洁的介绍一个命令，并列出它最常用的一些用法。根据二八法则原理，你很少会用到一些命令的高级用法，常用用法已经可以满足你的需求。你可能经常在某些地方看到「tl;dr」这个缩写，它的意思是“Too long, didn’t read”，意思是就是“文章太长不想看？只看这里就行了”。</p>
+<p>首先在 mac 下通过 brew 安装 <code>tldr</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 tldr</span></span><br><span class="line">brew install tldr</span><br><span class="line"></span><br><span class="line"><span class="comment"># 更新 tldr 的数据</span></span><br><span class="line">tldr --update</span><br></pre></td></tr></table></figure>
+
+<p>使用 <code>tldr</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 查询 find 的常用用法</span></span><br><span class="line">tldr find</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">find</span><br><span class="line"></span><br><span class="line">Find files under the given directory tree, recursively.</span><br><span class="line"></span><br><span class="line">- Find files by extension:</span><br><span class="line">    find root_path -name &#x27;*.ext&#x27;</span><br><span class="line"></span><br><span class="line">- Find files matching path pattern:</span><br><span class="line">    find root_path -path &#x27;**/lib/**/*.ext&#x27;</span><br><span class="line"></span><br><span class="line">- Run a command for each file, use &#123;&#125; within the command to access the filename:</span><br><span class="line">    find root_path -name &#x27;*.ext&#x27; -exec wc -l &#123;&#125; \;</span><br><span class="line"></span><br><span class="line">- Find files modified in the last 24-hour period:</span><br><span class="line">    find root_path -mtime -1</span><br><span class="line"></span><br><span class="line">- Find files using case insensitive name matching, of a certain size:</span><br><span class="line">    find root_path -size +500k -size -10MB -iname &#x27;*.TaR.gZ&#x27;</span><br><span class="line"></span><br><span class="line">- Delete files by name, older than 180 days:</span><br><span class="line">    find root_path -name &#x27;*.ext&#x27; -mtime +180 -delete</span><br><span class="line"></span><br><span class="line">- Find files matching more than one search criteria:</span><br><span class="line">    find root_path -name &#x27;*.py&#x27; -or -name &#x27;*.r&#x27;</span><br><span class="line"></span><br><span class="line">- Find files matching a given pattern, while excluding specific paths:</span><br><span class="line">    find root_path -name &#x27;*.py&#x27; -not -path &#x27;*/site-packages/*&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>是不是比 <code>man</code> 的结果好用多了。</p>
+<h2 id="z-便捷目录跳转"><a href="#z-便捷目录跳转" class="headerlink" title="z - 便捷目录跳转"></a>z - 便捷目录跳转</h2><p>每次跳到常用目录，要输入很长的路径？需要在两个&#x2F;多个目录来回切换？<code>cd</code> 不够好用，<code>pushd/popd/dirs</code> 在一定程度上解决了这个问题，通过将一些目录压到栈中来来回跳转，但还是不够智能。</p>
+<p>在这个智能时代，需要一些命令让跳转更加随心所欲，于是一些更加智能的命令被开发出来了。新的命令的主要思路就是，记住你常用的目录，然后等你跳转了一定时间后，就可以用很短的名称（前缀）跳转到常去目录了。</p>
+<p>这类工具中比较有名的有 <a target="_blank" rel="noopener" href="https://github.com/wting/autojump"><code>autojump</code></a>、<a target="_blank" rel="noopener" href="https://github.com/rupa/z"><code>z</code></a>、<a target="_blank" rel="noopener" href="https://github.com/clvv/fasd"><code>fasd</code></a>。它们的功能都是类似的，不过整体来说 fasd 功能最强大，不仅支持快速跳转目录，也支持快速打开文件；z 和 autojump 功能基本相同，z 的性能会好一些。我目前主要使用 <code>z</code>。</p>
+<p>安装 z：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install z</span><br></pre></td></tr></table></figure>
+
+<p>在 <em>~&#x2F;.bash_profile</em> 中增加配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># z enabled</span></span><br><span class="line">[ -f /usr/local/etc/profile.d/z.sh ] &amp;&amp; . /usr/local/etc/profile.d/z.sh</span><br></pre></td></tr></table></figure>
+
+<p>这里有一段这些工具的比较：</p>
+<blockquote>
+<p>这类工具中最早的应该是大名鼎鼎的autojump，因为它的快捷命令是j，所以大家也都习惯性地称其为j。autojump使用Python编写，对于Bash和Shell的支持都比较好。但是可能是因为是Python写的吧，有的时候会感觉反应有些慢。</p>
+<p>有了j之后，又有了z。z的介绍就是”更好的j”。它的功能和j基本是相同的，不过它使用Shell脚本编写，更加简洁，基本上不会拖慢终端的响应速度。我比较喜欢简洁的，现在看来Github上大部分人也是, z得到了3000+的star，超越了它的前辈autojump。</p>
+<p>然后人们还不满足，于是又有了大杀器Fasd，Fasd不光会记录目录，还会记录文件，也就是说它可以做到快捷打开某个深层目录的文件。Fasd还可以通过配置，实现更加高级的功能。Fasd与Zsh的结合也非常好，可以使用tab灵活的在几个目录中选择。可能是由于Fasd太强大了，虽然它使用Shell脚本写的，但是在使用的时候还是会感觉拖慢了终端的速度，特别是在执行ls -l的时候，会感觉输出明显慢了一拍。</p>
+<p>—— <a target="_blank" rel="noopener" href="https://skyline75489.github.io/post/2014-12-13_j-z-and-fasd.html">https://skyline75489.github.io/post/2014-12-13_j-z-and-fasd.html</a></p>
+</blockquote>
+<h2 id="fzf-快速模糊搜索"><a href="#fzf-快速模糊搜索" class="headerlink" title="fzf - 快速模糊搜索"></a>fzf - 快速模糊搜索</h2><p><a target="_blank" rel="noopener" href="https://github.com/junegunn/fzf"><code>fzf</code></a> 是一个很高效的 fuzzy finder，它提供模糊搜索文件夹&#x2F;文件的功能。</p>
+<p>首先在 mac 下通过 brew 安装 <code>fzf</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装 fzf</span></span><br><span class="line">brew install fzf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装完成 fzf 后，安装 shell 的快捷键支持</span></span><br><span class="line">/usr/local/opt/fzf/install</span><br></pre></td></tr></table></figure>
+
+<p>主要使用场景：</p>
+<ul>
+<li>查找文件：直接输入 <code>fzf</code>，或者使用快捷键 <code>&lt;ctrl-t&gt;</code> 呼出 fzf。使用快捷键调出的时候，前面可以有已经输入的命令，比如 <code>cat &lt;ctrl-t&gt;</code>。在 fzf 中输入关键字进行模糊搜索，使用 <code>&lt;ctrl-p&gt;/&lt;ctrl-n&gt;</code> 来上下选择结果。</li>
+<li>查找命令历史：安装 shell 的快捷键支持后，<code>fzf</code> 替换了系统默认的命令搜索 <code>&lt;ctrl-r&gt;</code>，呼出快捷键不变，使用起来更加好用了。</li>
+<li>命令后参数补全：命令参数中使用 <code>**&lt;TAB&gt;</code> 来触发补全，触发的场景可以参考<a target="_blank" rel="noopener" href="https://github.com/junegunn/fzf#fuzzy-completion-for-bash-and-zsh">这里</a></li>
+</ul>
+<h2 id="ag-代码搜索"><a href="#ag-代码搜索" class="headerlink" title="ag - 代码搜索"></a>ag - 代码搜索</h2><p><code>ag</code> 用来在文件中搜索关键字，是一个类似于 grep、ack 的命令。它的优点有：</p>
+<ul>
+<li>比 ack 还要快，这里有一篇<a target="_blank" rel="noopener" href="http://www.dongwm.com/archives/ack/">效率对比的文章</a></li>
+<li>可以忽略 <em>.gitignore</em> 中的文件</li>
+<li>命名更短，短就是效率…</li>
+</ul>
+<p>安装 ag：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install the_silver_searcher</span><br></pre></td></tr></table></figure>
+
+<p>使用方法和 grep 类似，可以用 <code>tldr ag</code> 了解下常用方法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Find files containing &quot;foo&quot;, and print the line matches in context:</span></span><br><span class="line">ag foo</span><br><span class="line"></span><br><span class="line"><span class="comment"># Find files containing &quot;foo&quot;, but only list the filenames:</span></span><br><span class="line">ag -l foo</span><br><span class="line"></span><br><span class="line"><span class="comment"># Find files with a name matching &quot;foo&quot;:</span></span><br><span class="line">ag -g foo</span><br></pre></td></tr></table></figure>
+
+<h2 id="fuck-命令纠错"><a href="#fuck-命令纠错" class="headerlink" title="fuck - 命令纠错"></a>fuck - 命令纠错</h2><p>有时候我们会输错一些命令，比如 <code>git brnch</code>，这时只需要一个简单的命令 <code>fuck</code>，它会根据它预设的模式给出可能的正确命令，用起来就是这么简单粗暴。</p>
+<p>安装 thefuck：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install thefuck</span><br></pre></td></tr></table></figure>
+
+<p>在 <em>~&#x2F;.bash_profile</em> 中增加配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">eval</span> $(thefuck --<span class="built_in">alias</span>)</span><br></pre></td></tr></table></figure>
+
+<h2 id="httpie-友好的-HTTP-请求工具"><a href="#httpie-友好的-HTTP-请求工具" class="headerlink" title="httpie - 友好的 HTTP 请求工具"></a>httpie - 友好的 HTTP 请求工具</h2><p><a target="_blank" rel="noopener" href="https://github.com/jakubroztocil/httpie"><code>httpie</code></a> 是一个对人类友好的 HTTP 请求模拟器，它的命令参数符合直觉，结果显示的也更清晰。<code>curl</code> 的参数就没那么容易记忆了，总是需要去查手册。</p>
+<p>安装 httpie：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install httpie</span><br></pre></td></tr></table></figure>
+
+<p>一些基本的用法：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># GET 访问某页面</span></span><br><span class="line">http example.org</span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看具体的请求头</span></span><br><span class="line">http -v example.org</span><br><span class="line"></span><br><span class="line"><span class="comment"># 带 query string 的请求</span></span><br><span class="line">http www.google.com search==<span class="string">&#x27;HTTPie logo&#x27;</span> tbm==isch</span><br><span class="line"></span><br><span class="line"><span class="comment"># 修改请求头</span></span><br><span class="line">http example.org  User-Agent:Bacon/1.0  <span class="string">&#x27;Cookie:valued-visitor=yes;foo=bar&#x27;</span>  X-Foo:Bar</span><br></pre></td></tr></table></figure>
+
+<h2 id="htop-更直观的系统状态"><a href="#htop-更直观的系统状态" class="headerlink" title="htop - 更直观的系统状态"></a>htop - 更直观的系统状态</h2><p><a target="_blank" rel="noopener" href="https://github.com/hishamhm/htop"><code>htop</code></a> 可以查看当前系统状态，可以当做是 top 的一个增强版本。它的界面更加直观并且支持鼠标操作，用一下你就知道好在哪里了。</p>
+<p>安装 htop：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install htop</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://github.com/nicolargo/glances"><code>glances</code></a> 又是 <code>htop</code> 的一个升级版，它提供更加详细的信息，并且是 C&#x2F;S 结构的，也就是说你可以监控其他机器的状态。</p>
+</article>
+<div class="article-footer">
+    <section id="license">
+      <div class="header"><span>许可协议</span></div>
+      <div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div>
+    </section>
+    
+
+
+    <section id="share">
+      <div class="header"><span>分享文章</span></div>
+      <div class="body">
+        <div class="link"><input class="copy-area" readonly="true" id="copy-link" value="http://example.com/2017/04/23/using-shell-with-the-time/" /></div>
+        <div class="social-wrap dis-select"><a class="social share-item wechat" onclick="util.toggle(&quot;qrcode-wechat&quot;)"><img  src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/b32ef3da1162a.svg" /></a><a class="social share-item weibo" target="_blank" rel="external nofollow noopener noreferrer" href="https://service.weibo.com/share/share.php?url=http://example.com/2017/04/23/using-shell-with-the-time/&title=现代化 Shell 使用指南 - 月汐&summary=Shell 作为一个历史悠久的效率工具，它提供了很多方便的工具，提高我们操作计算机的效率。然而被现代各种便利操作熏陶了的我们，可能对一些默认的命令的效率并不满意了。那么如何更好的利用好 Shell 呢？
+tl;dr: 一些很好用的命令..."><img  src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/80c07e4dbb303.svg" /></a><a class="social share-item email" href="mailto:?subject=现代化 Shell 使用指南 - 月汐&amp;body=http://example.com/2017/04/23/using-shell-with-the-time/"><img  src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/a1b00e20f425d.svg" /></a><a class="social share-item link" onclick="util.copy(&quot;copy-link&quot;, &quot;复制成功&quot;)"><img  src="https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/social/8411ed322ced6.svg" /></a></div>
+        
+        <div class="qrcode" id="qrcode-wechat" style="opacity:0;height:0">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=256x256&data=http://example.com/2017/04/23/using-shell-with-the-time/"/>
+        </div>
+        
+      </div>
+    </section>
+    </div>
+
+<div class="related-wrap" id="read-next"><section class="body"><div class="item" id="prev"><div class="note">较新文章</div><a href="/2018/11/17/the-pomodoro-technique/">了解番茄工作法</a></div><div class="item" id="next"><div class="note">较早文章</div><a href="/2016/10/15/personal-macbook-configuration/">个人的 MacBook 配置</a></div></section></div>
+
+
+
+
+  <div class="related-wrap md-text" id="comments">
+    <section class='header cmt-title cap theme'>
+      <p>快来参与讨论吧~</p>
+
+    </section>
+    <section class='body cmt-body giscus'>
+      
+
+<svg class="loading" style="vertical-align:middle;fill:currentColor;overflow:hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="giscus" src="https://giscus.app/client.js" data-repo="xkniu/blog-comment" data-repo-id="R_kgDOO0znQg" data-category="Announcements" data-category-id="DIC_kwDOO0znQs4CuVpD" data-mapping="pathname" data-strict="0" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="preferred_color_scheme" data-lang="zh-CN" data-loading="lazy" crossorigin="anonymous"></div>
+
+    </section>
+  </div>
+
+
+
+<footer class="page-footer footnote"><hr><div class="text"><p>本站由 <a href="/">Xuekai Niu</a> 使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.33.1">Stellar 1.33.1</a> 主题创建。<br>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+</div></footer>
+<div class="main-mask" onclick="sidebar.dismiss()"></div></div><aside class="l_right">
+<div class="widgets">
+
+
+
+<widget class="widget-wrapper toc" id="data-toc" collapse="false"><div class="widget-header dis-select"><span class="name">本文目录</span><a class="cap-action" onclick="sidebar.toggleTOC()" ><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></a></div><div class="widget-body"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#tldr-%E5%91%BD%E4%BB%A4%E5%A4%87%E5%BF%98"><span class="toc-text">tldr - 命令备忘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#z-%E4%BE%BF%E6%8D%B7%E7%9B%AE%E5%BD%95%E8%B7%B3%E8%BD%AC"><span class="toc-text">z - 便捷目录跳转</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fzf-%E5%BF%AB%E9%80%9F%E6%A8%A1%E7%B3%8A%E6%90%9C%E7%B4%A2"><span class="toc-text">fzf - 快速模糊搜索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ag-%E4%BB%A3%E7%A0%81%E6%90%9C%E7%B4%A2"><span class="toc-text">ag - 代码搜索</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#fuck-%E5%91%BD%E4%BB%A4%E7%BA%A0%E9%94%99"><span class="toc-text">fuck - 命令纠错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#httpie-%E5%8F%8B%E5%A5%BD%E7%9A%84-HTTP-%E8%AF%B7%E6%B1%82%E5%B7%A5%E5%85%B7"><span class="toc-text">httpie - 友好的 HTTP 请求工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#htop-%E6%9B%B4%E7%9B%B4%E8%A7%82%E7%9A%84%E7%B3%BB%E7%BB%9F%E7%8A%B6%E6%80%81"><span class="toc-text">htop - 更直观的系统状态</span></a></li></ol></div><div class="widget-footer"><a class="top" onclick="util.scrollTop()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5"><path stroke-linejoin="round" d="m9 15.5l3-3l3 3m-6-4l3-3l3 3"/><path d="M7 3.338A9.95 9.95 0 0 1 12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.821.487-3.53 1.338-5"/></g></svg><span>回到顶部</span></a><a class="buttom" onclick="util.scrollComment()"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><!-- Icon from Solar by 480 Design - https://creativecommons.org/licenses/by/4.0/ --><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="1.5" d="M8 10.5h8M8 14h5.5M17 3.338A9.95 9.95 0 0 0 12 2C6.477 2 2 6.477 2 12c0 1.6.376 3.112 1.043 4.453c.178.356.237.763.134 1.148l-.595 2.226a1.3 1.3 0 0 0 1.591 1.592l2.226-.596a1.63 1.63 0 0 1 1.149.133A9.96 9.96 0 0 0 12 22c5.523 0 10-4.477 10-10c0-1.821-.487-3.53-1.338-5"/></svg><span>参与讨论</span></a></div></widget>
+</div></aside><div class='float-panel'>
+  <button type='button' style='display:none' class='laptop-only rightbar-toggle mobile' onclick='sidebar.rightbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6h11m-11 6h11m-11 6h11M4 6h1v4m-1 0h2m0 8H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg>
+  </button>
+  <button type='button' style='display:none' class='mobile-only leftbar-toggle mobile' onclick='sidebar.leftbar()'>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 11c0-3.771 0-5.657 1.172-6.828C4.343 3 6.229 3 10 3h4c3.771 0 5.657 0 6.828 1.172C22 5.343 22 7.229 22 11v2c0 3.771 0 5.657-1.172 6.828C19.657 21 17.771 21 14 21h-4c-3.771 0-5.657 0-6.828-1.172C2 18.657 2 16.771 2 13z"/><path id="sep" stroke-linecap="round" d="M5.5 10h6m-5 4h4m4.5 7V3"/></g></svg>
+  </button>
+</div>
+</div><div class="scripts">
+
+
+<script type="text/javascript">
+  window.canonical = {"originalHost":null,"officialHosts":["localhost"],"encoded":""};
+  const ctx = {
+    date_suffix: {
+      just: `刚刚`,
+      min: `分钟前`,
+      hour: `小时前`,
+      day: `天前`,
+    },
+    root : `/`,
+    tag_plugins: {
+      chat: Object.assign({"api":"https://siteinfo.listentothewind.cn/api/v1"}),
+    }
+  };
+
+  // required plugins (only load if needs)
+  if (`local_search`) {
+    ctx.search = {};
+    ctx.search.service = `local_search`;
+    if (ctx.search.service == 'local_search') {
+      let service_obj = Object.assign({}, `{"field":"all","path":"/search.json","content":true,"skip_search":null,"sort":"-date"}`);
+      ctx.search[ctx.search.service] = service_obj;
+    }
+  }
+  const def = {
+    avatar: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/avatar/round/3442075.svg`,
+    cover: `https://gcore.jsdelivr.net/gh/cdn-x/placeholder@1.0.12/cover/76b86c0226ffd.svg`,
+    loading: `https://api.iconify.design/eos-icons:three-dots-loading.svg?color=%231cd0fd`,
+  };
+  const deps = {
+    jquery: `https://gcore.jsdelivr.net/npm/jquery@3.7/dist/jquery.min.js`,
+    marked: `https://gcore.jsdelivr.net/npm/marked@13.0/lib/marked.umd.min.js`,
+    lazyload: `/%5Bobject%20Object%5D`
+  }
+  
+
+</script>
+
+<script type="text/javascript">
+  
+  function RunItem() {
+    this.list = []; // 存放回调函数
+    this.start = () => {
+      for (var i = 0; i < this.list.length; i++) {
+        this.list[i].run();
+      }
+    };
+    this.push = (fn, name, setRequestAnimationFrame = true) => {
+      let myfn = fn
+      if (setRequestAnimationFrame) {
+        myfn = () => {
+          utils.requestAnimationFrame(fn)
+        }
+      }
+      var f = new Item(myfn, name);
+      this.list.push(f);
+    };
+    this.remove = (name) => {
+      for (let index = 0; index < this.list.length; index++) {
+        const e = this.list[index];
+        if (e.name == name) {
+          this.list.splice(index, 1);
+        }
+      }
+    }
+    // 构造一个可以run的对象
+    function Item(fn, name) {
+      // 函数名称
+      this.name = name || fn.name;
+      // run方法
+      this.run = () => {
+        try {
+          fn()
+        } catch (error) {
+          console.log(error);
+        }
+      };
+    }
+  }
+
+  const utils = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    css: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    js: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script');
+      if (src.startsWith('/')) {
+        src = ctx.root + src.substring(1);
+      }
+      script.src = src;
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function () {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    jq: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        utils.js(deps.jquery).then(fn)
+      } else {
+        fn()
+      }
+    },
+
+    onLoading: (el) => {
+      if (el) {
+        $(el).append('<div class="loading-wrap"><svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" stroke-opacity=".3" d="M12 3C16.9706 3 21 7.02944 21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="1.3s" values="60;0"/></path><path stroke-dasharray="15" stroke-dashoffset="15" d="M12 3C16.9706 3 21 7.02944 21 12"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.3s" values="15;0"/><animateTransform attributeName="transform" dur="1.5s" repeatCount="indefinite" type="rotate" values="0 12 12;360 12 12"/></path></g></svg></div>');
+      }
+    },
+    onLoadSuccess: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap').remove();
+      }
+    },
+    onLoadFailure: (el) => {
+      if (el) {
+        $(el).find('.loading-wrap svg').remove();
+        $(el).find('.loading-wrap').append('<svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"><path stroke-dasharray="60" stroke-dashoffset="60" d="M12 3L21 20H3L12 3Z"><animate fill="freeze" attributeName="stroke-dashoffset" dur="0.5s" values="60;0"/></path><path stroke-dasharray="6" stroke-dashoffset="6" d="M12 10V14"><animate fill="freeze" attributeName="stroke-dashoffset" begin="0.6s" dur="0.2s" values="6;0"/></path></g><circle cx="12" cy="17" r="1" fill="currentColor" fill-opacity="0"><animate fill="freeze" attributeName="fill-opacity" begin="0.8s" dur="0.4s" values="0;1"/></circle></svg>');
+        $(el).find('.loading-wrap').addClass('error');
+      }
+    },
+    request: (el, url, callback, onFailure) => {
+      const maxRetry = 3;
+      let retryCount = 0;
+
+      return new Promise((resolve, reject) => {
+        const load = () => {
+          utils.onLoading?.(el);
+
+          let timedOut = false;
+          const timeout = setTimeout(() => {
+            timedOut = true;
+            console.warn('[request] 超时:', url);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject('请求超时');
+            } else {
+              setTimeout(load, 1000);
+            }
+          }, 5000);
+
+          fetch(url).then(resp => {
+            if (timedOut) return;
+            clearTimeout(timeout);
+
+            if (!resp.ok) throw new Error('响应失败');
+            return resp;
+          }).then(data => {
+            if (timedOut) return;
+            utils.onLoadSuccess?.(el);
+            callback(data);
+            resolve(data);
+          }).catch(err => {
+            clearTimeout(timeout);
+            console.warn('[request] 错误:', err);
+
+            if (++retryCount >= maxRetry) {
+              utils.onLoadFailure?.(el);
+              onFailure?.();
+              reject(err);
+            } else {
+              setTimeout(load, 1000);
+            }
+          });
+        };
+
+        load();
+      });
+    },
+    requestWithoutLoading: (url, options = {}, maxRetry = 2, timeout = 5000) => {
+      return new Promise((resolve, reject) => {
+        let retryCount = 0;
+
+        const tryRequest = () => {
+          let timedOut = false;
+          const timer = setTimeout(() => {
+            timedOut = true;
+            if (++retryCount > maxRetry) reject('timeout');
+            else tryRequest();
+          }, timeout);
+
+          fetch(url, options)
+            .then(resp => {
+              clearTimeout(timer);
+              if (!resp.ok) throw new Error('bad response');
+              resolve(resp);
+            })
+            .catch(err => {
+              clearTimeout(timer);
+              if (++retryCount > maxRetry) reject(err);
+              else setTimeout(tryRequest, 500);
+            });
+        };
+
+        tryRequest();
+      });
+    },
+    /********************** requestAnimationFrame ********************************/
+    // 1、requestAnimationFrame 会把每一帧中的所有 DOM 操作集中起来，在一次重绘或回流中就完成，并且重绘或回流的时间间隔紧紧跟随浏览器的刷新频率，一般来说，这个频率为每秒60帧。
+    // 2、在隐藏或不可见的元素中，requestAnimationFrame 将不会进行重绘或回流，这当然就意味着更少的的 cpu，gpu 和内存使用量。
+    requestAnimationFrame: (fn) => {
+      if (!window.requestAnimationFrame) {
+        window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame;
+      }
+      window.requestAnimationFrame(fn)
+    },
+    dark: {},
+  };
+
+  // utils.dark.mode 当前模式 dark or light
+  // utils.dark.toggle() 暗黑模式触发器
+  // utils.dark.push(callBack[,"callBackName"]) 传入触发器回调函数
+  utils.dark.method = {
+    toggle: new RunItem(),
+  };
+  utils.dark = Object.assign(utils.dark, {
+    push: utils.dark.method.toggle.push,
+  });
+</script>
+<script>
+  const sidebar = {
+    leftbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    rightbar: () => {
+      if (l_body) {
+        l_body.toggleAttribute('rightbar');
+        l_body.removeAttribute('leftbar');
+      }
+    },
+    dismiss: () => {
+      if (l_body) {
+        l_body.removeAttribute('leftbar');
+        l_body.removeAttribute('rightbar');
+      }
+    },
+    toggleTOC: () => {
+      document.querySelector('#data-toc').classList.toggle('collapse');
+    }
+  }
+</script>
+<script type="text/javascript">
+  (() => {
+    const tagSwitchers = document.querySelectorAll('.tag-subtree.parent-tag > a > .tag-switcher-wrapper')
+    for (const tagSwitcher of tagSwitchers) {
+      tagSwitcher.addEventListener('click', (e) => {
+        const parent = e.target.closest('.tag-subtree.parent-tag')
+        parent.classList.toggle('expanded')
+        e.preventDefault()
+      })
+    }
+
+    // Get active tag from query string, then activate it.
+    const urlParams = new URLSearchParams(window.location.search)
+    const activeTag = urlParams.get('tag')
+    if (activeTag) {
+      let tag = document.querySelector(`.tag-subtree[data-tag="${activeTag}"]`)
+      if (tag) {
+        tag.querySelector('a').classList.add('active')
+        
+        while (tag) {
+          tag.classList.add('expanded')
+          tag = tag.parentElement.closest('.tag-subtree.parent-tag')
+        }
+      }
+    }
+  })()
+</script>
+
+<script async src="https://gcore.jsdelivr.net/npm/vanilla-lazyload@19.1/dist/lazyload.min.js"></script>
+<script>
+  // https://www.npmjs.com/package/vanilla-lazyload
+  // Set the options globally
+  // to make LazyLoad self-initialize
+  window.lazyLoadOptions = {
+    elements_selector: ".lazy",
+    callback_loaded: (el) => {
+      el.classList.add('loaded');
+      const wrapper = el.closest('.lazy-box');
+      const icon = wrapper?.querySelector('.lazy-icon');
+      if (icon) icon.remove();
+    }
+  };
+  // Listen to the initialization event
+  // and get the instance of LazyLoad
+  window.addEventListener(
+    "LazyLoad::Initialized",
+    function (event) {
+      window.lazyLoadInstance = event.detail.instance;
+    },
+    false
+  );
+  document.addEventListener('DOMContentLoaded', function () {
+    window.lazyLoadInstance?.update();
+  });
+
+  window.wrapLazyloadImages = (container) => {
+    if (typeof container === 'string') {
+      container = document.querySelector(container);
+    }
+    if (!container) return;
+    
+    const images = container.querySelectorAll('img');
+    images.forEach((img) => {
+      if (img.classList.contains('lazy')) return;
+
+      const src = img.getAttribute('src');
+      if (!src) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'lazy-box';
+
+      const newImg = img.cloneNode();
+      newImg.removeAttribute('src');
+      newImg.setAttribute('data-src', src);
+      newImg.classList.add('lazy');
+
+      const icon = document.createElement('div');
+      icon.className = 'lazy-icon';
+      if (def.loading) {
+        icon.style.backgroundImage = `url("${def.loading}")`;
+      }
+
+      wrapper.appendChild(newImg);
+      wrapper.appendChild(icon);
+
+      img.replaceWith(wrapper);
+    });
+
+    // 通知 LazyLoad 更新
+    if (window.lazyLoadInstance?.update) {
+      window.lazyLoadInstance.update();
+    }
+  }
+  
+</script>
+
+<!-- required -->
+<script src="/js/main.js?v=1.33.1" defer></script>
+
+<script type="text/javascript">
+  const applyTheme = (theme) => {
+    if (theme === 'auto') {
+      document.documentElement.removeAttribute('data-theme')
+    } else {
+      document.documentElement.setAttribute('data-theme', theme)
+    }
+
+    // applyThemeToGiscus(theme)
+  }
+
+  // FIXME: 这会导致无法使用 preferred_color_scheme 以外的主题
+  const applyThemeToGiscus = (theme) => {
+    // theme = theme === 'auto' ? 'preferred_color_scheme' : theme
+    const cmt = document.getElementById('giscus')
+    if (cmt) {
+      // This works before giscus load.
+      cmt.setAttribute('data-theme', theme)
+    }
+
+    const iframe = document.querySelector('#comments > section.giscus > iframe')
+    if (iframe) {
+      // This works after giscus loaded.
+      const src = iframe.src
+      const newSrc = src.replace(/theme=[\w]+/, `theme=${theme}`)
+      iframe.src = newSrc
+    }
+  }
+
+  const switchTheme = () => {
+    // light -> dark -> auto -> light -> ...
+    const currentTheme = document.documentElement.getAttribute('data-theme')
+    let newTheme;
+    switch (currentTheme) {
+      case 'light':
+        newTheme = 'dark'
+        break
+      case 'dark':
+        newTheme = 'auto'
+        break
+      default:
+        newTheme = 'light'
+    }
+    applyTheme(newTheme)
+    window.localStorage.setItem('Stellar.theme', newTheme)
+    utils.dark.mode = newTheme === 'auto' ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light") : newTheme;
+    utils.dark.method.toggle.start();
+
+    const messages = {
+      light: `切换到浅色模式`,
+      dark: `切换到深色模式`,
+      auto: `切换到跟随系统配色`,
+    }
+    hud?.toast?.(messages[newTheme])
+  }
+
+  (() => {
+    // Apply user's preferred theme, if any.
+    const theme = window.localStorage.getItem('Stellar.theme')
+    if (theme !== null) {
+      applyTheme(theme)
+    } else {
+      utils.dark.mode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    utils.dark.method.toggle.start();
+  })()
+</script>
+
+
+<!-- optional -->
+
+  <script type="module">
+  const el = document.querySelector('#comments #giscus');
+  util.viewportLazyload(el, load_discus, true);
+
+  function load_discus() {
+    if (!el) return;
+    try {
+        el.innerHTML = '';
+      } catch (error) {
+        console.error(error);
+      }
+      const script = document.createElement('script');
+      script.async = true;
+      for (const key of Object.keys(el.attributes)) {
+        const attr = el.attributes[key];
+        if (['class', 'id'].includes(attr.name) === false) {
+          script.setAttribute(attr.name, attr.value);
+        }
+      }
+      el.appendChild(script);
+  }
+</script>
+
+
+
+
+<script defer>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.services = Object.assign({}, JSON.parse(`{"mdrender":{"js":"/js/services/mdrender.js"},"siteinfo":{"js":"/js/services/siteinfo.js","api":null},"ghinfo":{"js":"/js/services/ghinfo.js"},"rating":{"js":"/js/services/rating.js","api":"https://star-vote.xaox.cc/api/rating"},"vote":{"js":"/js/services/vote.js","api":"https://star-vote.xaox.cc/api/vote"},"sites":{"js":"/js/services/sites.js"},"friends":{"js":"/js/services/friends.js"},"friends_and_posts":{"js":"/js/services/friends_and_posts.js"},"timeline":{"js":"/js/services/timeline.js"},"fcircle":{"js":"/js/services/fcircle.js"},"weibo":{"js":"/js/services/weibo.js"},"memos":{"js":"/js/services/memos.js"},"voice":{"js":"/js/plugins/voice.js"},"video":{"js":"/js/plugins/video.js"},"download-file":{"js":"/js/plugins/download-file.js"},"twikoo":{"js":"/js/services/twikoo_latest_comment.js"},"waline":{"js":"/js/services/waline_latest_comment.js"},"artalk":{"js":"/js/services/artalk_latest_comment.js"},"giscus":{"js":"/js/services/giscus_latest_comment.js"},"contributors":{"edit_this_page":{"_posts/":null,"wiki/stellar/":"https://github.com/xaoxuu/hexo-theme-stellar-docs/blob/main/"},"js":"/js/services/contributors.js"}}`));
+    for (let id of Object.keys(ctx.services)) {
+      const js = ctx.services[id].js;
+      if (id == 'siteinfo') {
+        ctx.cardlinks = document.querySelectorAll('a.link-card[cardlink]');
+        if (ctx.cardlinks?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            setCardLink(ctx.cardlinks);
+          });
+        }
+      } else if (id == 'voice') {
+        ctx.voiceAudios = document.querySelectorAll('.voice>audio');
+        if (ctx.voiceAudios?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            createVoiceDom(ctx.voiceAudios);
+          });
+        }
+      } else if (id == 'video') {
+        ctx.videos = document.querySelectorAll('.video>video');
+        if (ctx.videos?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            videoEvents(ctx.videos);
+          });
+        }
+      } else if (id == 'download-file') {
+        ctx.files = document.querySelectorAll('.file');
+        if (ctx.files?.length > 0) {
+          utils.js(js, { defer: true }).then(function () {
+            downloadFileEvent(ctx.files);
+          });
+        }
+      } else {
+        const els = document.getElementsByClassName(`ds-${id}`);
+        if (els?.length > 0) {
+          utils.jq(() => {
+            if (id == 'timeline' || 'memos' || 'marked') {
+              utils.js(deps.marked).then(function () {
+                utils.js(js, { defer: true });
+              });
+            } else {
+              utils.js(js, { defer: true });
+            }
+          });
+        }
+      }
+    }
+
+    // chat iphone time
+    let phoneTimes = document.querySelectorAll('.chat .status-bar .time');
+
+    if (phoneTimes.length > 0) {
+      NowTime();
+      var date = new Date();
+      var sec = date.getSeconds();
+      var firstAdjustInterval = setInterval(firstAdjustTime, 1000 * (60 - sec));
+    }
+
+    function firstAdjustTime() {
+      NowTime();
+      clearInterval(firstAdjustInterval);
+      setInterval(NowTime, 1000 * 60);
+    }
+
+    function NowTime() {
+      for (let i = 0; i < phoneTimes.length; ++i) {
+        var timeSpan = phoneTimes[i];
+        var date = new Date();
+        var hour = date.getHours();
+        var min = date.getMinutes();
+        timeSpan.innerHTML = check(hour) + ":" + check(min);
+      }
+    };
+
+    function check(val) {
+      if (val < 10) {
+        return ("0" + val);
+      }
+      return (val);
+    }
+
+    // chat quote
+    const chat_quote_obverser = new IntersectionObserver((entries, observer) => {
+      entries.filter((entry) => { return entry.isIntersecting }).sort((a, b) => a.intersectionRect.y !== b.intersectionRect.y ? a.intersectionRect.y - b.intersectionRect.y : a.intersectionRect.x - b.intersectionRect.x).forEach((entry, index) => {
+          observer.unobserve(entry.target);
+          setTimeout(() => {
+            entry.target.classList.add('quote-blink');
+            setTimeout(() => {
+              entry.target.classList.remove('quote-blink');
+            }, 1000);
+          }, Math.max(100, 16) * (index + 1));
+        });
+    });
+
+    var chatQuotes = document.querySelectorAll(".chat .talk .quote");
+    chatQuotes.forEach((quote) => {
+      quote.addEventListener('click', function () {
+        var chatCellDom = document.getElementById("quote-" + quote.getAttribute("quotedCellTag"));
+        if (chatCellDom) {
+          var chatDiv = chatCellDom.parentElement;
+          var mid = chatDiv.clientHeight / 2;
+          var offsetTop = chatCellDom.offsetTop;
+          if (offsetTop > mid - chatCellDom.clientHeight / 2) {
+            chatDiv.scrollTo({
+              top: chatCellDom.offsetTop - mid + chatCellDom.clientHeight / 2,
+              behavior: "smooth"
+            });
+          } else {
+            chatDiv.scrollTo({
+              top: 0,
+              behavior: "smooth"
+            });
+          }
+          chat_quote_obverser.observe(chatCellDom);
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    ctx.search = {
+      path: `/search.json`,
+    }
+    utils.js('/js/search/local-search.js', { defer: true });
+  });
+</script><script>
+  window.FPConfig = {
+    delay: 0,
+    ignoreKeywords: [],
+    maxRPS: 5,
+    hoverDelay: 25
+  };
+</script>
+<script defer src="https://gcore.jsdelivr.net/npm/flying-pages@2/flying-pages.min.js"></script><script>
+  ctx.fancybox = {
+    selector: `.timenode p>img`,
+    css: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css`,
+    js: `https://gcore.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js`
+  };
+  var selector = '[data-fancybox]:not(.error), .with-fancybox .atk-content img:not([atk-emoticon])';
+  if (ctx.fancybox.selector) {
+    selector += `, ${ctx.fancybox.selector}`
+  }
+  var needFancybox = document.querySelectorAll(selector).length !== 0;
+  if (!needFancybox) {
+    const memos = document.getElementsByClassName('ds-memos');
+    if (memos != undefined && memos.length > 0) {
+      needFancybox = true;
+    }
+    const fancybox = document.getElementsByClassName('with-fancybox');
+    if (fancybox != undefined && fancybox.length > 0) {
+      needFancybox = true;
+    }
+  }
+  if (needFancybox) {
+    utils.css(ctx.fancybox.css);
+    utils.js(ctx.fancybox.js, { defer: true }).then(function () {
+      Fancybox.bind(selector, {
+        hideScrollbar: false,
+        Thumbs: {
+          autoStart: false,
+        },
+        caption: (fancybox, slide) => {
+          return slide.triggerEl.alt || slide.triggerEl.dataset.caption || null
+        }
+      });
+    })
+  }
+</script>
+<script>
+  window.addEventListener('DOMContentLoaded', (event) => {
+    const swiper_api = document.getElementById('swiper-api');
+    if (swiper_api != undefined) {
+      utils.css(`https://unpkg.com/swiper@10.3/swiper-bundle.min.css`);
+      utils.js(`https://unpkg.com/swiper@10.3/swiper-bundle.min.js`, { defer: true }).then(function () {
+        const effect = swiper_api.getAttribute('effect') || '';
+        var swiper = new Swiper('.swiper#swiper-api', {
+          slidesPerView: 'auto',
+          spaceBetween: 8,
+          centeredSlides: true,
+          effect: effect,
+          rewind: true,
+          pagination: {
+            el: '.swiper-pagination',
+            clickable: true,
+          },
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev',
+          },
+        });
+      })
+    }
+  });
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    window.codeElements = document.querySelectorAll('.code');
+    if (window.codeElements.length > 0) {
+      ctx.copycode = {
+        default_text: `Copy`,
+        success_text: `Copied`,
+        toast: `复制成功`,
+      };
+      utils.js('/js/plugins/copycode.js');
+    }
+  });
+</script>
+
+
+<!-- inject -->
+
+</div></body></html>
